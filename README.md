@@ -6,6 +6,8 @@ If you have a custom built 3D printer, this can help to detect issues or maximiz
 
 Project scafoolded with Vite around Mar 2025.  
 
+Live at [https://mauricioize.dev/gcode-visualizer](https://mauricioize.dev/gcode-visualizer).
+
 # HOW TO RUN
 ```
 npm install  
