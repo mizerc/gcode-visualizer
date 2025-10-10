@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 import VList from "./components/VList";
 import Label from "./components/Label";
@@ -7,7 +7,6 @@ import { ParsedGcode } from "./Parser";
 import HList from "./components/HList";
 import GcodeCanvas from "./components/GcodeCanvas";
 import Grid from "./components/Grid";
-import { HistogramCanvas } from "./components/HistogramCanvas";
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 
 function App() {

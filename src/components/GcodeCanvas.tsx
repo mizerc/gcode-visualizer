@@ -1,29 +1,29 @@
 import React, { useRef, useEffect } from "react";
 import type { Command } from "../Parser";
 
-class Camera {
-  x: number;
-  y: number;
-  zoom: number;
-  constructor(x: number, y: number, zoom: number) {
-    this.x = x;
-    this.y = y;
-    this.zoom = zoom;
-  }
+// class Camera {
+//   x: number;
+//   y: number;
+//   zoom: number;
+//   constructor(x: number, y: number, zoom: number) {
+//     this.x = x;
+//     this.y = y;
+//     this.zoom = zoom;
+//   }
 
-  zoomIn() {
-    this.zoom *= 1.1;
-  }
+//   zoomIn() {
+//     this.zoom *= 1.1;
+//   }
 
-  zoomOut() {
-    this.zoom /= 1.1;
-  }
+//   zoomOut() {
+//     this.zoom /= 1.1;
+//   }
 
-  move(x: number, y: number) {
-    this.x += x;
-    this.y += y;
-  }
-}
+//   move(x: number, y: number) {
+//     this.x += x;
+//     this.y += y;
+//   }
+// }
 
 export type Point = { x: number; y: number };
 
