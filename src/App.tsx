@@ -26,12 +26,11 @@ function App() {
   const readFromExample = () => {
     async function handleAsync() {
       try {
-        const response = await fetch("/rabbit.gcode");
+        const response = await fetch("/gcode-visualizer/rabbit.gcode");
         if (!response.ok) {
           throw new Error("Failed to fetch file");
         }
         const text = await response.text();
-
         const fakeFile = new File([text], "rabbit.gcode", {
           type: "text/plain",
         });
