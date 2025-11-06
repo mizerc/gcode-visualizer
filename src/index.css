@@ -70,6 +70,17 @@ h1::after {
   border-radius: 2px;
 }
 
+.app-description {
+  text-align: center;
+  color: #64748b;
+  font-size: 1.1em;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: -16px auto 32px auto;
+  padding: 0 20px;
+  font-weight: 400;
+}
+
 h2 {
   font-size: 1.8em;
   line-height: 1.2;

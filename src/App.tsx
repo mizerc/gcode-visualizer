@@ -125,6 +125,10 @@ function App() {
     <>
       <div className="container">
         <h1>GCODE VISUALIZER</h1>
+        <p className="app-description">
+          Analyze and visualize your 3D printing G-code files with detailed layer-by-layer inspection, 
+          movement analysis, and real-time canvas rendering.
+        </p>
 
         <VList>
           <VList>
