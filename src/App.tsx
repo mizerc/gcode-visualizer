@@ -7,6 +7,8 @@ import { ParsedGcode } from "./Parser";
 import HList from "./components/HList";
 import GcodeCanvas from "./components/GcodeCanvas";
 import Grid from "./components/Grid";
+import NavigationControl from "./components/NavigationControl";
+import Histogram from "./components/Histogram";
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
   const parseInstance = useRef<ParsedGcode | null>(null);
   const [layer, setLayer] = useState(0);
   const [command, setCommand] = useState(0);
+  const [activeTab, setActiveTab] = useState<'input' | 'layer' | 'analysis' | 'visualization'>('input');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -53,7 +56,8 @@ function App() {
     file.text().then((content) => {
       parseInstance.current = new ParsedGcode(content);
       setFileContent(content);
-      // setFileContent(parsedGcode.toString());
+      // Auto-switch to layer explorer when file is loaded
+      setActiveTab('layer');
     });
   }, [file]);
 
@@ -130,102 +134,162 @@ function App() {
           movement analysis, and real-time canvas rendering.
         </p>
 
-        <VList>
-          <VList>
-            <h2>INPUT</h2>
-            <HList>
-              <input
-                type="file"
-                onChange={handleFileChange}
+        {/* Tab Navigation */}
+        <div className="tabs">
+          <button 
+            className={`tab ${activeTab === 'input' ? 'active' : ''}`}
+            onClick={() => setActiveTab('input')}
+          >
+            📁 File Input
+          </button>
+          <button 
+            className={`tab ${activeTab === 'layer' ? 'active' : ''}`}
+            onClick={() => setActiveTab('layer')}
+            disabled={!file}
+          >
+            🔍 Layer Explorer
+          </button>
+          <button 
+            className={`tab ${activeTab === 'analysis' ? 'active' : ''}`}
+            onClick={() => setActiveTab('analysis')}
+            disabled={!file}
+          >
+            📊 Movement Analysis
+          </button>
+          <button 
+            className={`tab ${activeTab === 'visualization' ? 'active' : ''}`}
+            onClick={() => setActiveTab('visualization')}
+            disabled={!file}
+          >
+            🎨 Visualization
+          </button>
+        </div>
+
+        <div className="tab-content">
+          {/* FILE INPUT TAB */}
+          {activeTab === 'input' && (
+            <>
+              <VList>
+                <h2>INPUT</h2>
+                <HList>
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                  />
+                  <button onClick={readFromExample}>Read from example</button>
+                </HList>
+              </VList>
+
+              {file ? (
+                <VList>
+                  <h2>BASIC INFO</h2>
+                  <HList>
+                    <VList>
+                      <h3>FILE INFO</h3>
+                      <Label title="Filename" value={file?.name || ""} />
+                      <Label title="File size" value={file?.size.toString() || ""} />
+                      <Label title="File type" value={file?.type || ""} />
+                      <Label
+                        title="File last modified"
+                        value={file?.lastModified.toString() || ""}
+                      />
+                      <Label
+                        title="Layer count"
+                        value={parseInstance.current?.getLayersCount().toString() || ""}
+                      />
+                    </VList>
+
+                    <VList>
+                      <h3>FILE CONTENT</h3>
+                      <TextArea value={fileContent} />
+                    </VList>
+                  </HList>
+                </VList>
+              ) : (
+                <div style={{ 
+                  textAlign: 'center', 
+                  padding: '40px', 
+                  color: '#94a3b8',
+                  fontSize: '1.1em'
+                }}>
+                  👆 Please upload a G-code file or load an example to get started
+                </div>
+              )}
+            </>
+          )}
+
+          {/* LAYER EXPLORER TAB */}
+          {activeTab === 'layer' && (
+            <>
+              <h2>PER-LAYER DATA</h2>
+
+              <NavigationControl
+                layerCount={parseInstance.current?.getLayersCount() || 0}
+                currentLayer={layer}
+                commandsCount={parseInstance.current?.getCommandsCountForLayer(layer) || 0}
+                currentCommand={command}
+                onPrevLayer={prevLayer}
+                onNextLayer={nextLayer}
+                onResetLayer={resetLayer}
+                onPrevCommand={prevCommand}
+                onNextCommand={nextCommand}
+                onResetCommand={restCommand}
               />
-              <button onClick={readFromExample}>Read from example</button>
-            </HList>
-          </VList>
 
-          <VList>
-            <h2>BASIC INFO</h2>
-            <HList>
               <VList>
-                <h3>FILE INFO</h3>
-                <Label title="Filename" value={file?.name || ""} />
-                <Label title="File size" value={file?.size.toString() || ""} />
-                <Label title="File type" value={file?.type || ""} />
-                <Label
-                  title="File last modified"
-                  value={file?.lastModified.toString() || ""}
-                />
-                <Label
-                  title="File last modified"
-                  value={file?.lastModified.toString() || ""}
+                <h3>COMMANDS OF CURRENT LAYER</h3>
+                <TextArea
+                  value={
+                    parseInstance.current
+                      ?.getCommandsForLayer(layer)
+                      .map((command) => {
+                        return `line: ${command.line}\nCMD: ${command.code}, X: ${command.x}, Y: ${command.y}, Z: ${command.z}, E: ${command.e}, F: ${command.f}\n`;
+                      })
+                      .join("\n") || ""
+                  }
                 />
               </VList>
 
-              <VList>
-                <h3>FILE CONTENT</h3>
-                <TextArea value={fileContent} />
-              </VList>
-            </HList>
-          </VList>
+              <Label
+                title="Command"
+                value={
+                  parseInstance.current?.getCommand(layer, command)?.line || ""
+                }
+              />
 
-          <h2>PER-LAYER DATA</h2>
+              <h2>Command Distribution</h2>
+              <Histogram
+                data={parseInstance.current?.getHistogramArrayFromLayer(layer) || []}
+              />
+            </>
+          )}
 
-          <HList>
-            <Label
-              title="Layer count"
-              value={parseInstance.current?.getLayersCount().toString() || ""}
-            />
-            <Label title="Current layer" value={layer.toString()} />
-            <button onClick={prevLayer}>Prev Layer</button>
-            <button onClick={nextLayer}>Next Layer</button>
-            <button onClick={resetLayer}>Reset</button>
-          </HList>
+          {/* MOVEMENT ANALYSIS TAB */}
+          {activeTab === 'analysis' && (
+            <>
+              <h2>Movement Analysis</h2>
 
-          <HList>
-            <Label
-              title="Commands in this layer"
-              value={
-                parseInstance.current
-                  ?.getCommandsCountForLayer(layer)
-                  .toString() || ""
-              }
-            />
-            {/* <Label
-              title="G1 Commands in this layer"
-              value={
-                parseInstance.current
-                  ?.getCommandCountForLayerAndCode(layer, "G1")
-                  .toString() || ""
-              }
-            /> */}
-            <Label title="Current command" value={command.toString()} />
-            <button onClick={prevCommand}>Prev command</button>
-            <button onClick={nextCommand}>Next command</button>
-            <button onClick={restCommand}>Reset</button>
-          </HList>
+              <NavigationControl
+                layerCount={parseInstance.current?.getLayersCount() || 0}
+                currentLayer={layer}
+                commandsCount={parseInstance.current?.getCommandsCountForLayer(layer) || 0}
+                currentCommand={command}
+                onPrevLayer={prevLayer}
+                onNextLayer={nextLayer}
+                onResetLayer={resetLayer}
+                onPrevCommand={prevCommand}
+                onNextCommand={nextCommand}
+                onResetCommand={restCommand}
+              />
 
-          <VList>
-            <h3>COMMANDS OF CURRENT LAYER</h3>
-            <TextArea
-              value={
-                parseInstance.current
-                  ?.getCommandsForLayer(layer)
-                  .map((command) => {
-                    return `line: ${command.line}\nCMD: ${command.code}, X: ${command.x}, Y: ${command.y}, Z: ${command.z}, E: ${command.e}, F: ${command.f}\n`;
-                  })
-                  .join("\n") || ""
-              }
-            />
-          </VList>
+              <Label
+                title="Current Command"
+                value={
+                  parseInstance.current?.getCommand(layer, command)?.line || ""
+                }
+              />
 
-          <Label
-            title="Command"
-            value={
-              parseInstance.current?.getCommand(layer, command)?.line || ""
-            }
-          />
-
-          <h2>Moviment Analysis</h2>
-          <Grid maxCol={3}>
+              <Grid maxCol={3}>
             <Label
               title="CODE"
               value={
@@ -317,48 +381,51 @@ function App() {
               }
               unit="mm3/s"
             />
-          </Grid>
+              </Grid>
+            </>
+          )}
 
-          <h2>Histogram of Current Layer</h2>
-          <div>
-            {parseInstance.current
-              ?.getHistogramArrayFromLayer(layer)
-              .map((str) => {
-                return <p>{str}</p>;
-              })}
-          </div>
+          {/* VISUALIZATION TAB */}
+          {activeTab === 'visualization' && (
+            <>
+              <NavigationControl
+                layerCount={parseInstance.current?.getLayersCount() || 0}
+                currentLayer={layer}
+                commandsCount={parseInstance.current?.getCommandsCountForLayer(layer) || 0}
+                currentCommand={command}
+                onPrevLayer={prevLayer}
+                onNextLayer={nextLayer}
+                onResetLayer={resetLayer}
+                onPrevCommand={prevCommand}
+                onNextCommand={nextCommand}
+                onResetCommand={restCommand}
+              />
 
-          <h2>Extrusion Timeline</h2>
-          <BarChart
-            width={600}
-            height={200}
-            data={parseInstance.current
-              ?.getValidXYCommandsForLayer(layer)
-              .map((cmd) => {
-                return {
-                  bin: cmd.code,
-                  coount: cmd.extruded_volume_mm3 ? cmd.extruded_volume_mm3 : 1,
-                };
-              })}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="bin" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#8884d8" />
-          </BarChart>
-          {/* <HistogramCanvas
-            commands={
-              parseInstance.current?.getValidXYCommandsForLayer(
-                layer,
-                command
-              ) || []
-            }
-          /> */}
+              <h2>Canvas Visualization</h2>
+              {renderCanvas()}
 
-          <h2>Canvas</h2>
-          {renderCanvas()}
-        </VList>
+              <h2>Extrusion Timeline</h2>
+              <BarChart
+                width={600}
+                height={200}
+                data={parseInstance.current
+                  ?.getValidXYCommandsForLayer(layer)
+                  .map((cmd) => {
+                    return {
+                      bin: cmd.code,
+                      coount: cmd.extruded_volume_mm3 ? cmd.extruded_volume_mm3 : 1,
+                    };
+                  })}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="bin" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#8884d8" />
+              </BarChart>
+            </>
+          )}
+        </div>
       </div>
     </>
   );

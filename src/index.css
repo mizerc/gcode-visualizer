@@ -39,8 +39,13 @@ body {
     0 10px 20px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 1400px;
-  margin: 20px;
+  width: calc(100vw - 40px);
+  max-width: 1800px;
+  height: 95vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 h1 {
@@ -56,6 +61,7 @@ h1 {
   padding: 16px;
   text-align: center;
   position: relative;
+  flex-shrink: 0;
 }
 
 h1::after {
@@ -79,6 +85,86 @@ h1::after {
   margin: -16px auto 32px auto;
   padding: 0 20px;
   font-weight: 400;
+  flex-shrink: 0;
+}
+
+/* Tab Navigation */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #64748b;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+  box-shadow: none;
+}
+
+.tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tab.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.tab:not(:disabled):active {
+  transform: none;
+}
+
+/* Tab content area */
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+
+.tab-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 0;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 0;
+}
+
+/* Tab content animation */
+.tab-content > * {
+  animation: fadeInTab 0.3s ease-in;
+}
+
+@keyframes fadeInTab {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h2 {
