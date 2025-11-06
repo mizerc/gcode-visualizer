@@ -7,7 +7,7 @@ const HList = styled.div`
   flex-wrap: wrap;
   gap: 12px;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(226, 232, 240, 0.6);
   align-items: center;

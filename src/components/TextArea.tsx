@@ -5,7 +5,7 @@ const TextArea = styled.textarea`
   max-height: 600px;
   width: 100%;
   border: 2px solid #e2e8f0;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 16px;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 13px;
@@ -32,12 +32,12 @@ const TextArea = styled.textarea`
   
   &::-webkit-scrollbar-track {
     background: #f1f5f9;
-    border-radius: 4px;
+    border-radius: 0;
   }
   
   &::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: 4px;
+    border-radius: 0;
   }
 `;
 

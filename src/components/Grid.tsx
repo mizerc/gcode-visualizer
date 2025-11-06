@@ -16,7 +16,7 @@ const GridWrapper = styled.div<{ maxCol: number; gap: number }>`
   gap: ${({ gap }) => gap}px;
   padding: 16px;
   background: rgba(248, 250, 252, 0.5);
-  border-radius: 12px;
+  border-radius: 4px;
   border: 1px solid rgba(226, 232, 240, 0.6);
 `;
 

@@ -14,7 +14,7 @@ const LabelKey = styled.div`
   text-align: left;
   min-width: 140px;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@ const LabelValue = styled.div`
   flex-grow: 2;
   text-align: left;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: white;
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@ const LabelUnit = styled.div`
   flex-grow: 0;
   min-width: 60px;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 4px;
   text-align: center;
   background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
   display: flex;

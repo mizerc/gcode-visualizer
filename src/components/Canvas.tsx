@@ -28,7 +28,7 @@ const Canvas: React.FC<CanvasProps> = ({ width = 300, height = 150, draw }) => {
       height={height}
       style={{ 
         border: "2px solid #e2e8f0",
-        borderRadius: "12px",
+        borderRadius: "2px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         background: "white"
       }}

@@ -33,7 +33,7 @@ body {
 .container {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   padding: 32px;
-  border-radius: 24px;
+  border-radius: 4px;
   box-shadow: 
     0 20px 50px rgba(0, 0, 0, 0.3),
     0 10px 20px rgba(0, 0, 0, 0.2),
@@ -80,7 +80,7 @@ h2 {
   padding: 12px 16px;
   background: linear-gradient(90deg, #f1f5f9 0%, transparent 100%);
   border-left: 4px solid #3b82f6;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 h3 {
@@ -93,11 +93,11 @@ h3 {
   padding: 8px 12px;
   background: #f8fafc;
   border-left: 3px solid #8b5cf6;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 button {
-  border-radius: 10px;
+  border-radius: 4px;
   border: none;
   padding: 0.7em 1.4em;
   font-size: 0.95em;
@@ -126,7 +126,7 @@ button:focus-visible {
 input[type="file"] {
   border: 2px solid #e2e8f0;
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 4px;
   font-family: inherit;
   font-size: 0.95em;
   background: white;
