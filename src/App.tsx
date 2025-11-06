@@ -154,7 +154,7 @@ function App() {
             onClick={() => setActiveTab('analysis')}
             disabled={!file}
           >
-            📊 Movement Analysis
+            📊 Command Analysis
           </button>
           <button 
             className={`tab ${activeTab === 'visualization' ? 'active' : ''}`}
@@ -267,7 +267,7 @@ function App() {
           {/* MOVEMENT ANALYSIS TAB */}
           {activeTab === 'analysis' && (
             <>
-              <h2>Movement Analysis</h2>
+              <h2>Command Analysis</h2>
 
               <NavigationControl
                 layerCount={parseInstance.current?.getLayersCount() || 0}
@@ -282,106 +282,144 @@ function App() {
                 onResetCommand={restCommand}
               />
 
-              <Label
-                title="Current Command"
-                value={
-                  parseInstance.current?.getCommand(layer, command)?.line || ""
-                }
-              />
+              <VList>
+                <h3>Current Command</h3>
+                <Label
+                  title="G-Code Line"
+                  value={
+                    parseInstance.current?.getCommand(layer, command)?.line || "N/A"
+                  }
+                />
+                <Label
+                  title="Command Type"
+                  value={
+                    parseInstance.current?.getCommand(layer, command)?.code || "N/A"
+                  }
+                />
+              </VList>
 
-              <Grid maxCol={3}>
-            <Label
-              title="CODE"
-              value={
-                parseInstance.current?.getCommand(layer, command)?.code || ""
-              }
-              unit=""
-            />
-            <Label
-              title="XYZE"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.x?.toFixed(3) +
-                  ", " +
-                  parseInstance.current
-                    ?.getCommand(layer, command)
-                    ?.y?.toFixed(3) +
-                  ", " +
-                  parseInstance.current
-                    ?.getCommand(layer, command)
-                    ?.z?.toFixed(3) +
-                  ", " +
-                  parseInstance.current
-                    ?.getCommand(layer, command)
-                    ?.e?.toFixed(3) || ""
-              }
-              unit=""
-            />
-            <Label
-              title="last seen z"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.last_seen_z?.toFixed(3) || ""
-              }
-              unit="mm"
-            />
-            <Label
-              title="DIST"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.distance?.toFixed(3) || ""
-              }
-              unit="mm"
-            />
-            <Label
-              title="EXTRUDED"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.extruded_volume_mm3?.toFixed(3) || ""
-              }
-              unit="mm3"
-            />
-            <Label
-              title="last_f_mm_s"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.last_seen_f_mm_s?.toFixed(3) || ""
-              }
-              unit="mm/s"
-            />
-            <Label
-              title="EXTRUDED VOLUME PER MM"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.volume_per_distance?.toFixed(3) || ""
-              }
-              unit="mm3/s"
-            />
-            <Label
-              title="VELOCITY"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.velocity_mm_s?.toFixed(3) || ""
-              }
-              unit="mm/s"
-            />
-            <Label
-              title="FLOW"
-              value={
-                parseInstance.current
-                  ?.getCommand(layer, command)
-                  ?.flow_mm3_s?.toFixed(3) || ""
-              }
-              unit="mm3/s"
-            />
-              </Grid>
+              <VList>
+                <h3>Position Coordinates</h3>
+                <Grid maxCol={2}>
+                  <Label
+                    title="X Position"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.x?.toFixed(3) || "N/A"
+                    }
+                    unit="mm"
+                  />
+                  <Label
+                    title="Y Position"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.y?.toFixed(3) || "N/A"
+                    }
+                    unit="mm"
+                  />
+                  <Label
+                    title="Z Position"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.z?.toFixed(3) || "N/A"
+                    }
+                    unit="mm"
+                  />
+                  <Label
+                    title="E Position"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.e?.toFixed(3) || "N/A"
+                    }
+                    unit="mm"
+                  />
+                </Grid>
+              </VList>
+
+              <VList>
+                <h3>Movement Metrics</h3>
+                <Grid maxCol={2}>
+                  <Label
+                    title="Travel Distance"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.distance?.toFixed(3) || "0.000"
+                    }
+                    unit="mm"
+                  />
+                  <Label
+                    title="Last Seen Z"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.last_seen_z?.toFixed(3) || "N/A"
+                    }
+                    unit="mm"
+                  />
+                </Grid>
+              </VList>
+
+              <VList>
+                <h3>Extrusion Data</h3>
+                <Grid maxCol={2}>
+                  <Label
+                    title="Extruded Volume"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.extruded_volume_mm3?.toFixed(3) || "0.000"
+                    }
+                    unit="mm³"
+                  />
+                  <Label
+                    title="Volume per Distance"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.volume_per_distance?.toFixed(3) || "0.000"
+                    }
+                    unit="mm³/mm"
+                  />
+                </Grid>
+              </VList>
+
+              <VList>
+                <h3>Speed & Flow</h3>
+                <Grid maxCol={2}>
+                  <Label
+                    title="Velocity"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.velocity_mm_s?.toFixed(3) || "0.000"
+                    }
+                    unit="mm/s"
+                  />
+                  <Label
+                    title="Feed Rate"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.last_seen_f_mm_s?.toFixed(3) || "N/A"
+                    }
+                    unit="mm/s"
+                  />
+                  <Label
+                    title="Flow Rate"
+                    value={
+                      parseInstance.current
+                        ?.getCommand(layer, command)
+                        ?.flow_mm3_s?.toFixed(3) || "0.000"
+                    }
+                    unit="mm³/s"
+                  />
+                </Grid>
+              </VList>
             </>
           )}
 
