@@ -131,10 +131,6 @@ function App() {
             <h2>INPUT</h2>
             <HList>
               <input
-                style={{
-                  border: "1px solid black",
-                  padding: 8,
-                }}
                 type="file"
                 onChange={handleFileChange}
               />

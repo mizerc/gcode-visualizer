@@ -4,11 +4,12 @@ const VList = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 10px;
-  border: 1px dotted #f00;
-  padding: 12px;
-  border-radius: 5px;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
   min-width: 300px;
+  background: rgba(248, 250, 252, 0.4);
+  border: 1px solid rgba(226, 232, 240, 0.6);
 `;
 
 export default VList;
