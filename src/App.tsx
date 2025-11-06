@@ -251,7 +251,7 @@ function App() {
               </VList>
 
               <Label
-                title="Command"
+                title={`Command [Index: ${command}]`}
                 value={
                   parseInstance.current?.getCommand(layer, command)?.line || ""
                 }
@@ -261,6 +261,68 @@ function App() {
               <Histogram
                 data={parseInstance.current?.getHistogramArrayFromLayer(layer) || []}
               />
+
+              <h2>Extrusion Volume per Command</h2>
+              <div style={{ 
+                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
+                padding: '24px',
+                borderRadius: '4px',
+                border: '2px solid #e2e8f0',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                overflowX: 'auto'
+              }}>
+                <BarChart
+                  width={Math.max(800, (parseInstance.current?.getCommandsCountForLayer(layer) || 0) * 8)}
+                  height={300}
+                  data={parseInstance.current
+                    ?.getValidXYCommandsForLayer(layer, parseInstance.current?.getCommandsCountForLayer(layer) || 0)
+                    .map((cmd, index) => {
+                      return {
+                        index: index,
+                        volume: cmd.extruded_volume_mm3 || 0,
+                        code: cmd.code,
+                      };
+                    })}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis 
+                    dataKey="index" 
+                    label={{ value: 'Command Index', position: 'insideBottom', offset: -10, style: { fill: '#64748b', fontWeight: 600 } }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
+                    stroke="#cbd5e1"
+                  />
+                  <YAxis 
+                    label={{ value: 'Extrusion Volume (mm³)', angle: -90, position: 'insideLeft', style: { fill: '#64748b', fontWeight: 600 } }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
+                    stroke="#cbd5e1"
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      background: 'white', 
+                      border: '2px solid #3b82f6', 
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                    }}
+                    labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    formatter={(value: number, name: string) => {
+                      if (name === 'volume') return [value.toFixed(3) + ' mm³', 'Extrusion Volume'];
+                      return [value, name];
+                    }}
+                  />
+                  <Bar 
+                    dataKey="volume" 
+                    fill="url(#colorGradient)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <defs>
+                    <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9}/>
+                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.9}/>
+                    </linearGradient>
+                  </defs>
+                </BarChart>
+              </div>
             </>
           )}
 
