@@ -6,6 +6,16 @@ A web-based tool for visualizing and analyzing G-code commands from 3D printers,
 
 **[https://mauricioize.dev/gcode-visualizer](https://mauricioize.dev/gcode-visualizer)**
 
+## 🖼️ Screenshots
+
+| Screenshot |
+|------------|
+| <img src="screenshots/ss1.png" width="800" /> |
+| <img src="screenshots/ss2.png" width="800" /> |
+| <img src="screenshots/ss3.png" width="800" /> |
+
+
+
 ## 📋 Overview
 
 G-Code Visualizer helps you understand and optimize your fabrication workflows by providing detailed analysis of G-code files. 

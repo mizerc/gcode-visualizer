@@ -58,7 +58,7 @@ function App() {
       parseInstance.current = new ParsedGcode(content);
       setFileContent(content);
       // Auto-switch to layer explorer when file is loaded
-      setActiveTab('layer');
+      // setActiveTab('layer');
     });
   }, [file]);
 
