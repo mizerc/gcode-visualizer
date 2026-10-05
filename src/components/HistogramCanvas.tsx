@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import type { Command } from "../Parser";
+import type { Command } from "../core/Parser";
 
 export type Point = { x: number; y: number };
 

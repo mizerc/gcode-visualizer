@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import type { Command } from "../Parser";
+import type { Command } from "../core/Parser";
 
 // class Camera {
 //   x: number;

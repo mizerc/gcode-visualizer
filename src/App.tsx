@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import "./App.css";
+
 import VList from "./components/VList";
 import Label from "./components/Label";
 import TextArea from "./gui/components/TextArea";
-import { ParsedGcode } from "./Parser";
+import { ParsedGcode } from "./core/Parser";
 import GcodeCanvas from "./components/GcodeCanvas";
 import Grid from "./components/Grid";
 import NavigationControl from "./components/NavigationControl";
@@ -79,7 +81,7 @@ function App() {
       <GcodeCanvas
         points={parseInstance.current.getValidXYCommandsForLayer(
           layer,
-          command
+          command,
         )}
       />
     );
@@ -88,12 +90,12 @@ function App() {
   //
   const prevLayer = useCallback(
     () => setLayer(layer - 1 < 0 ? 0 : layer - 1),
-    [layer]
+    [layer],
   );
   const nextLayer = useCallback(() => setLayer(layer + 1), [layer]);
   const prevCommand = useCallback(
     () => setCommand(command - 1 < 0 ? 0 : command - 1),
-    [command]
+    [command],
   );
   const resetLayer = useCallback(() => setLayer(0), [command]);
 
@@ -319,14 +321,14 @@ function App() {
                   width={Math.max(
                     800,
                     (parseInstance.current?.getCommandsCountForLayer(layer) ||
-                      0) * 8
+                      0) * 8,
                   )}
                   height={300}
                   data={parseInstance.current
                     ?.getValidXYCommandsForLayer(
                       layer,
                       parseInstance.current?.getCommandsCountForLayer(layer) ||
-                        0
+                        0,
                     )
                     .map((cmd, index) => {
                       return {
