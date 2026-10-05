@@ -75,11 +75,11 @@ export const HistogramCanvas: React.FC<GcodeCanvasProps> = ({
       ref={canvasRef}
       width={width}
       height={height}
-      style={{ 
+      style={{
         border: "2px solid #e2e8f0",
         borderRadius: "2px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        background: "white"
+        background: "white",
       }}
     />
   );

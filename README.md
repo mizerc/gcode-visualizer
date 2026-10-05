@@ -19,7 +19,7 @@ A web app tool for visualizing and analyzing G-code commands from 3D printers, C
 Simply drop your `.gcode` file from popular slicers (like UltiMaker Cura, PrusaSlicer, or others).
 Or press the button to load a built-in g-code file example.
 
-- **Extrusion volume calculations** 
+- **Extrusion volume calculations**
 - **Speed and flow analysis**
 - **Layer-by-layer visualization**
 - **Command distribution statistics**
@@ -37,7 +37,14 @@ As a former owner of an Ender 3 printer, which is famous for challenging you wit
 - TypeScript
 - React
 - Styled-components
+- HTML Canvas + 2D Context API
 - recharts
+- Basic navigation with hard-coded routes for each tab
+- React context to handle state communication between the tabs
+
+### BACKLOG
+
+- Add some UI library like shadcn
 
 ### DEV MODE
 

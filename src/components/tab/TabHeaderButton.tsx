@@ -34,20 +34,19 @@ const StyledTabButton = styled.button<{
     cursor: not-allowed;
     opacity: 0.5;
   }
-    
+
   ${({ active }) =>
     active &&
     `
       background-color: rgb(75, 141, 239);
-    `
-  }
+    `}
 
   &:active:not(:disabled) {
     background-color: rgb(81, 118, 183);
   }
 `;
 
-const TabButton: React.FC<TabButtonProps> = ({
+export const TabHeaderButton: React.FC<TabButtonProps> = ({
   variant = "primary",
   size = "medium",
   children,
@@ -67,5 +66,3 @@ const TabButton: React.FC<TabButtonProps> = ({
     </StyledTabButton>
   );
 };
-
-export default TabButton;
