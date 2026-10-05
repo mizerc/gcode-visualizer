@@ -2,11 +2,11 @@ import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 import Heading2 from "../components/gui/Heading2";
 import { Heading3 } from "../components/gui/Heading3";
 import TextArea from "../components/gui/TextArea";
-import Histogram from "../components/Histogram";
-import Label from "../components/Label";
+import Histogram from "../components/core/Histogram";
+import Label from "../components/gui/Label";
 import NavigationControl from "../components/NavigationControl";
 import { GridCell } from "../components/TabGrid";
-import VList from "../components/VList";
+import VList from "../components/guiv2/VList";
 import { useApp } from "../context/AppContext";
 
 export function TabLayerPage() {

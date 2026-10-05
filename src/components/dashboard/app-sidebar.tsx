@@ -29,7 +29,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { SidebarLogo } from "../DashLogo";
+import { SidebarLogo } from "./DashLogo";
 import { useApp } from "@/context/AppContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

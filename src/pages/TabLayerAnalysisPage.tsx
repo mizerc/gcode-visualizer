@@ -15,8 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GridContainer } from "@/components/GridContainer";
-import { GridCard } from "@/components/GridCard";
+import { GridContainer } from "@/components/grid/GridContainer";
+import { GridCard } from "@/components/grid/GridCard";
 import DashContContainer from "@/components/gui/DashContContainer";
 
 const layerHeights = [34, 47, 61, 76, 89, 100, 94, 82, 68, 52, 38, 24];

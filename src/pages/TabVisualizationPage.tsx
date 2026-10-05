@@ -1,7 +1,7 @@
 import { GridCell, TabGrid } from "../components/TabGrid";
 import NavigationControl from "../components/NavigationControl";
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
-import GcodeCanvas from "../components/GcodeCanvas";
+import GcodeCanvas from "../components/core/GcodeCanvas";
 import { useApp } from "../context/AppContext";
 
 export function TabVisualizationPage() {
