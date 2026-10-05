@@ -36,7 +36,8 @@ As a former owner of an Ender 3 printer, which is famous for challenging you wit
 - Vite
 - TypeScript
 - React
-- Styled-components
+- Custom components using styled-components
+- A few shadcn components
 - HTML Canvas + 2D Context API
 - recharts
 - Basic navigation with hard-coded routes for each tab
@@ -52,3 +53,7 @@ As a former owner of an Ender 3 printer, which is famous for challenging you wit
 - `npm install`
 - `npm run dev`
 - open URL given by vite dev server
+
+### NOTES
+
+- npx shadcn@latest add button tabs card
