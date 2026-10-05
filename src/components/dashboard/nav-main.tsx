@@ -21,8 +21,10 @@ export function NavMain({
   }[];
 }) {
   return (
+    // GROUP
     <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-2">
+      <SidebarGroupContent>
+        {/* MENU 1 */}
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
@@ -42,6 +44,8 @@ export function NavMain({
             </Button>
           </SidebarMenuItem>
         </SidebarMenu>
+
+        {/* MENU 2 */}
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>

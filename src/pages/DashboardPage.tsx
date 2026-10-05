@@ -3,9 +3,15 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 // import data from "./data.json";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
-import { SectionCards } from "@/components/dashboard/section-tabs";
+import { TabInputPage } from "./TabInputPage";
+import { useApp } from "@/context/AppContext";
+import { TabLayerPage } from "./TabLayerPag";
+import { TabAnalysisPage } from "./TabAnalysisPage";
+import { TabVisualizationPage } from "./TabVisualizationPage";
 
 export default function DashboardPage() {
+  const { currTab } = useApp();
+
   return (
     <SidebarProvider
       style={
@@ -15,17 +21,23 @@ export default function DashboardPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      {/* SIDEBAR */}
+      <AppSidebar />
+
+      {/* CONTENT */}
       <SidebarInset>
+        {/* MAIN TOPBAR */}
         <SiteHeader />
+
+        {/* MAIN CONTENT */}
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-              <div className="px-4 lg:px-6">
-                {/* <ChartAreaInteractive /> */}
-              </div>
-              {/* <DataTable data={data} /> */}
+              <p>{currTab}</p>
+              {currTab === "input" && <TabInputPage />}
+              {currTab === "layer" && <TabLayerPage />}
+              {currTab === "analysis" && <TabAnalysisPage />}
+              {currTab === "visualization" && <TabVisualizationPage />}
             </div>
           </div>
         </div>

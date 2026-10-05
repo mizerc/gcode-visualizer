@@ -11,7 +11,6 @@ import {
   IconFileWord,
   IconFolder,
   IconHelp,
-  IconInnerShadowTop,
   IconListDetails,
   IconReport,
   IconSearch,
@@ -19,159 +18,103 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/dashboard/nav-documents";
-import { NavUser } from "@/components/dashboard/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NavMain } from "./nav-main";
-import { NavSecondary } from "./nav-secondary";
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
-  ],
-};
+import { SidebarLogo } from "../DashLogo";
+import { useApp } from "@/context/AppContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { setTab } = useApp();
+
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
+    <Sidebar {...props}>
+      {/* HEADER */}
+      <SidebarHeader className="p-0">
+        <SidebarLogo />
+      </SidebarHeader>
+
+      {/* MENU */}
+      <SidebarContent>
+        {/* SECTION 0 */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {/* ITEM 1 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Input"
+                  className="pl-4!"
+                  onClick={() => setTab("input")}
+                >
+                  <IconDashboard />
+                  <span>Open</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Analyse"
+                  className="pl-4!"
+                  onClick={() => setTab("analysis")}
+                >
+                  <IconDashboard />
+                  <span>Analyse</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Analyse"
+                  className="pl-4!"
+                  onClick={() => setTab("layer")}
+                >
+                  <IconDashboard />
+                  <span>Analyse</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Analyse"
+                  className="pl-4!"
+                  onClick={() => setTab("visualization")}
+                >
+                  <IconDashboard />
+                  <span>Visualize</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        {/* SECTION 1 */}
+        {/* <NavMain items={data.navMain} /> */}
+        {/* SECTION 2 */}
+        {/* <NavDocuments items={data.documents} /> */}
+        {/* SECTION 3 */}
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+      </SidebarContent>
+      {/* FOOTER */}
+      <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <a href="#">
-                <IconInnerShadowTop className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+            <SidebarMenuButton tooltip="Quick Create">
+              <span>Quick Create</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* <NavUser user={data.user} /> */}
       </SidebarFooter>
     </Sidebar>
   );

@@ -28,6 +28,9 @@ interface AppContextValue {
   nextLayer: () => void;
   prevLayer: () => void;
   resetLayer: () => void;
+  // Tab
+  currTab: string;
+  setTab: (tab: "input" | "layer" | "analysis" | "visualization") => void;
 }
 
 // Not exported: nobody should use this directly
@@ -46,6 +49,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Layer and command state
   const [layer, setLayer] = useState(0);
   const [command, setCommand] = useState(0);
+  // Tab state
+  const [currTab, setCurrTab] = useState("input");
 
   const restCommand = useCallback(() => {
     setCommand(0);
@@ -110,6 +115,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setError(null);
   }, []);
 
+  const setTab = useCallback(
+    (tab: "input" | "layer" | "analysis" | "visualization") => {
+      console.log(`Switching to tab: ${tab}`);
+      setCurrTab(tab);
+    },
+    [],
+  );
+
   const value = useMemo(
     () => ({
       gcodeFile,
@@ -129,6 +142,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       nextLayer,
       prevLayer,
       resetLayer,
+      currTab,
+      setTab,
     }),
     [gcodeFile, gcodeText, loading, error, setGcodeFile, clear],
   );
