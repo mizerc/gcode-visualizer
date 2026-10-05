@@ -10,12 +10,14 @@ import {
 } from "lucide-react";
 
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { GridContainer } from "@/components/GridContainer";
+import { GridCard } from "@/components/GridCard";
+import DashContContainer from "@/components/gui/DashContContainer";
 
 const layerHeights = [34, 47, 61, 76, 89, 100, 94, 82, 68, 52, 38, 24];
 const movementBreakdown = [
@@ -48,20 +50,12 @@ function Metric({
 
 export function TabLayerAnalysisPage() {
   return (
-    <main className="space-y-5 px-4">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">File analysis</h1>
-        <p className="text-sm text-muted-foreground">
-          A quick look at print settings, layer quality, and estimated usage.
-          Mock data for preview.
-        </p>
-      </header>
-
-      <section
-        aria-label="G-code file analysis"
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        <Card className="min-w-0 sm:col-span-2">
+    <DashContContainer
+      title="File analysis"
+      description="A quick look at print settings, layer quality, and estimated usage. Mock data for preview."
+    >
+      <GridContainer aria-label="G-code file analysis">
+        <GridCard $colSpan={2}>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Printer className="size-4" aria-hidden="true" />
@@ -77,9 +71,9 @@ export function TabLayerAnalysisPage() {
               <Metric label="Nozzle" value="0.4 mm" />
             </div>
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0">
+        <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Layers3 className="size-4" aria-hidden="true" />
@@ -105,9 +99,9 @@ export function TabLayerAnalysisPage() {
               Consistent height across the model
             </p>
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0">
+        <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Weight className="size-4" aria-hidden="true" />
@@ -124,9 +118,9 @@ export function TabLayerAnalysisPage() {
               <span>of 20 g spool</span>
             </div>
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0 sm:col-span-2">
+        <GridCard $colSpan={2}>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Activity className="size-4" aria-hidden="true" />
@@ -152,9 +146,9 @@ export function TabLayerAnalysisPage() {
               </div>
             ))}
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0">
+        <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Thermometer className="size-4" aria-hidden="true" />
@@ -180,9 +174,9 @@ export function TabLayerAnalysisPage() {
               </div>
             ))}
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0">
+        <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Clock3 className="size-4" aria-hidden="true" />
@@ -200,9 +194,9 @@ export function TabLayerAnalysisPage() {
               <span>24m</span>
             </div>
           </CardContent>
-        </Card>
+        </GridCard>
 
-        <Card className="min-w-0 sm:col-span-2">
+        <GridCard $colSpan={2}>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <ShieldCheck className="size-4" aria-hidden="true" />
@@ -212,20 +206,29 @@ export function TabLayerAnalysisPage() {
           </CardHeader>
           <CardContent className="grid gap-3 text-sm sm:grid-cols-3">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="size-4 text-emerald-600" aria-hidden="true" />
+              <ShieldCheck
+                className="size-4 text-emerald-600"
+                aria-hidden="true"
+              />
               Start sequence found
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="size-4 text-emerald-600" aria-hidden="true" />
+              <ShieldCheck
+                className="size-4 text-emerald-600"
+                aria-hidden="true"
+              />
               End sequence found
             </div>
             <div className="flex items-center gap-2">
-              <Waves className="size-4 text-muted-foreground" aria-hidden="true" />
+              <Waves
+                className="size-4 text-muted-foreground"
+                aria-hidden="true"
+              />
               No unusual travel spikes
             </div>
           </CardContent>
-        </Card>
-      </section>
-    </main>
+        </GridCard>
+      </GridContainer>
+    </DashContContainer>
   );
 }
