@@ -5,8 +5,8 @@ import AppContainer from "@/gui/components/AppContainer";
 import { useCallback, useEffect, useState } from "react";
 import { TabInputPage } from "./TabInputPage";
 import { TabLayerPage } from "./TabLayerPag";
-import { TabAnalysisPage } from "./TabAnalysisPage";
 import { TabVisualizationPage } from "./TabVisualizationPage";
+import { TabLayerAnalysisPage } from "./TabLayerAnalysisPage";
 
 export function TabPage() {
   // Tab navigation
@@ -18,7 +18,7 @@ export function TabPage() {
     layer,
     setCommand,
     parsedInstance,
-    gcodeFile,
+    isLoaded,
     prevLayer,
     nextLayer,
     prevCommand,
@@ -76,21 +76,21 @@ export function TabPage() {
         <TabHeaderButton
           active={activeTab === "layer"}
           onClick={() => setActiveTab("layer")}
-          disabled={!gcodeFile}
+          disabled={!isLoaded}
         >
           Layer Explorer
         </TabHeaderButton>
         <TabHeaderButton
           active={activeTab === "analysis"}
           onClick={() => setActiveTab("analysis")}
-          disabled={!gcodeFile}
+          disabled={!isLoaded}
         >
           Command Analysis
         </TabHeaderButton>
         <TabHeaderButton
           active={activeTab === "visualization"}
           onClick={() => setActiveTab("visualization")}
-          disabled={!gcodeFile}
+          disabled={!isLoaded}
         >
           Visualization
         </TabHeaderButton>
@@ -100,7 +100,7 @@ export function TabPage() {
       <TabContent>
         {activeTab === "input" && <TabInputPage />}
         {activeTab === "layer" && <TabLayerPage />}
-        {activeTab === "analysis" && <TabAnalysisPage />}
+        {activeTab === "analysis" && <TabLayerAnalysisPage />}
         {activeTab === "visualization" && <TabVisualizationPage />}
       </TabContent>
     </AppContainer>

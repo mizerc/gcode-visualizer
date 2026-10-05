@@ -1,79 +1,125 @@
-import { Heading3 } from "../components/gui/Heading3";
-import VList from "../components/VList";
+import { useState } from "react";
+import { LoaderCircle, X } from "lucide-react";
+import styled from "styled-components";
+import DashContContainer from "../components/gui/DashContContainer";
 import Button from "../gui/components/Button";
 import FileInput from "../gui/components/FileInput";
-import Label from "../components/Label";
-import TextArea from "../components/gui/TextArea";
 import { useApp } from "../context/AppContext";
 
-export function TabInputPage() {
-  const { setGcodeFile, gcodeFile, parsedInstance, gcodeText } = useApp();
+const SectionLabel = styled.h3`
+  margin: 0;
+  color: #334155;
+  font-size: 1rem;
+  font-weight: 600;
+`;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setGcodeFile(file);
+const Description = styled.p`
+  margin: -8px 0 0;
+  color: #64748b;
+  font-size: 0.925rem;
+  line-height: 1.5;
+`;
+
+const Divider = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    height: 1px;
+    flex: 1;
+    background: #e2e8f0;
+    content: "";
+  }
+`;
+
+const ErrorMessage = styled.p`
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.875rem;
+`;
+
+const Spinner = styled(LoaderCircle)`
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
+  }
+`;
+
+export function TabInputPage() {
+  const { gcodeFile, isLoading: isParsing, setGcodeFile, isLoaded } = useApp();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fileInputKey, setFileInputKey] = useState(0);
+
+  const handleFileChange = (file: File | null) => {
+    if (!file) return;
+    setErrorMessage(null);
+    setGcodeFile(file);
   };
 
-  const readFromExample = () => {
-    async function handleAsync() {
-      try {
-        const response = await fetch("/gcode-visualizer/rabbit.gcode");
-        if (!response.ok) {
-          throw new Error("Failed to fetch file");
-        }
-        const text = await response.text();
-        const fakeFile = new File([text], "rabbit.gcode", {
-          type: "text/plain",
-        });
-        setGcodeFile(fakeFile);
-      } catch (error) {
-        console.error("Error reading file:", error);
+  const readFromExample = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const [response] = await Promise.all([
+        fetch("/gcode-visualizer/rabbit.gcode"),
+        new Promise((resolve) => window.setTimeout(resolve, 2000)),
+      ]);
+      if (!response.ok) {
+        throw new Error("Failed to fetch the example G-code file.");
       }
+
+      const text = await response.text();
+      const exampleFile = new File([text], "rabbit.gcode", {
+        type: "text/plain",
+      });
+      setGcodeFile(exampleFile);
+    } catch (error) {
+      console.error("Error reading example file:", error);
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to load the example G-code file.",
+      );
+    } finally {
+      setIsLoading(false);
     }
-    handleAsync();
   };
 
   return (
-    <>
-      <VList>
-        <Heading3>INPUT</Heading3>
-        <VList>
-          {/* <input type="file" onChange={handleFileChange} /> */}
-          <FileInput onChange={handleFileChange} accept=".gcode" />
-          <Button onClick={readFromExample}>Read from example</Button>
-        </VList>
-      </VList>
-
-      {gcodeFile ? (
-        <VList>
-          <Heading3>BASIC INFO</Heading3>
-          <VList>
-            <Heading3>FILE INFO</Heading3>
-            <Label title="Filename" value={gcodeFile?.name || ""} />
-            <Label title="File size" value={gcodeFile?.size.toString() || ""} />
-            <Label title="File type" value={gcodeFile?.type || ""} />
-            <Label
-              title="File last modified"
-              value={gcodeFile?.lastModified.toString() || ""}
-            />
-            <Label
-              title="Layer count"
-              value={parsedInstance.current?.getLayersCount().toString() || ""}
-            />
-
-            {gcodeText && (
-              <VList>
-                <Heading3>FILE CONTENT</Heading3>
-                <TextArea value={gcodeText} />
-              </VList>
-            )}
-          </VList>
-        </VList>
-      ) : (
-        <p>Upload a G-code file or load an example to get started</p>
-      )}
-    </>
+    <DashContContainer
+      title="G-CODE FILE INPUT"
+      description="Choose a file from your device or drag it into the area below."
+    >
+      {/* LOAD */}
+      <FileInput
+        key={fileInputKey}
+        onChange={handleFileChange}
+        accept=".gcode"
+        disabled={isLoading}
+      />
+      <Divider>or</Divider>
+      {/* LOADING CASE */}
+      <Button onClick={readFromExample} disabled={isLoading}>
+        {isLoading && <Spinner size={18} aria-hidden="true" />}
+        {isLoading ? "Loading example..." : "Load example file"}
+      </Button>
+      {/* ERRROR */}
+      {errorMessage && <ErrorMessage role="alert">{errorMessage}</ErrorMessage>}
+      {/* STATUS MESSAGE */}
+      <span role="status" aria-live="polite">
+        {isLoading ? "Loading example G-code file." : ""}
+      </span>
+    </DashContContainer>
   );
 }

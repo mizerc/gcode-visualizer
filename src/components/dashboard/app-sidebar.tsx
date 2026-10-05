@@ -33,7 +33,7 @@ import { SidebarLogo } from "../DashLogo";
 import { useApp } from "@/context/AppContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { setTab } = useApp();
+  const { currTab, setTab } = useApp();
 
   return (
     <Sidebar {...props}>
@@ -60,15 +60,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Input"
+                  className="pl-4!"
+                  onClick={() => setTab("viewfile")}
+                >
+                  <IconFileDescription />
+                  <span>View File</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="File Info"
+                  className="pl-4!"
+                  onClick={() => setTab("fileinfo")}
+                >
+                  <IconFileDescription />
+                  <span>File Info</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
               {/* ITEM 2 */}
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  tooltip="Analyse"
+                  tooltip="Layer Analysis"
                   className="pl-4!"
                   onClick={() => setTab("analysis")}
                 >
-                  <IconDashboard />
-                  <span>Analyse</span>
+                  <IconChartBar />
+                  <span>Layer Analysis</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
@@ -79,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="pl-4!"
                   onClick={() => setTab("layer")}
                 >
-                  <IconDashboard />
+                  <IconListDetails />
                   <span>Analyse</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>

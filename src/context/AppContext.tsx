@@ -5,7 +5,6 @@ import {
   useState,
   useCallback,
   type ReactNode,
-  useEffect,
   useRef,
 } from "react";
 import { ParsedGcode } from "../core/Parser";
@@ -13,9 +12,10 @@ import { ParsedGcode } from "../core/Parser";
 interface AppContextValue {
   gcodeFile: File | null;
   gcodeText: string | null;
-  loading: boolean;
+  isLoading: boolean;
+  isLoaded: boolean;
   parsedInstance: React.RefObject<ParsedGcode | null>;
-  error: string | null;
+  hasError: string | null;
   setGcodeFile: (file: File) => Promise<void>;
   clear: () => void;
   layer: number;
@@ -30,7 +30,15 @@ interface AppContextValue {
   resetLayer: () => void;
   // Tab
   currTab: string;
-  setTab: (tab: "input" | "layer" | "analysis" | "visualization") => void;
+  setTab: (
+    tab:
+      | "input"
+      | "layer"
+      | "analysis"
+      | "visualization"
+      | "viewfile"
+      | "fileinfo",
+  ) => void;
 }
 
 // Not exported: nobody should use this directly
@@ -44,8 +52,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Hold the parsed G-code instance as an object
   const parsedInstance = useRef<ParsedGcode | null>(null);
   // Insternal state
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState<string | null>(null);
   // Layer and command state
   const [layer, setLayer] = useState(0);
   const [command, setCommand] = useState(0);
@@ -80,43 +89,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setLayer(0);
   }, [layer]);
 
-  /**
-   * Watch for changes to the selected file and update the file content accordingly.
-   */
-  useEffect(() => {
-    if (!gcodeFile) {
-      setGcodeText("");
-      return;
-    }
-
-    gcodeFile.text().then((content) => {
-      parsedInstance.current = new ParsedGcode(content);
-      setGcodeText(content);
-    });
-  }, [gcodeFile]);
-
   const setGcodeFile = useCallback(async (file: File) => {
-    setLoading(true);
-    setError(null);
+    setIsLoading(true);
+    setHasError(null);
     try {
       const text = await file.text();
+      const parsed = new ParsedGcode(text);
+      parsedInstance.current = parsed;
       setFile(file);
       setGcodeText(text);
+      setIsLoaded(parsed.getLayersCount() > 0);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to parse G-code");
+      setHasError(e instanceof Error ? e.message : "Failed to parse G-code");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }, []);
 
   const clear = useCallback(() => {
     setFile(null);
     setGcodeText(null);
-    setError(null);
+    parsedInstance.current = null;
+    setIsLoaded(false);
+    setHasError(null);
   }, []);
 
   const setTab = useCallback(
-    (tab: "input" | "layer" | "analysis" | "visualization") => {
+    (
+      tab:
+        | "input"
+        | "layer"
+        | "analysis"
+        | "visualization"
+        | "viewfile"
+        | "fileinfo",
+    ) => {
       console.log(`Switching to tab: ${tab}`);
       setCurrTab(tab);
     },
@@ -128,8 +135,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       gcodeFile,
       gcodeText,
       parsedInstance,
-      loading,
-      error,
+      isLoading,
+      isLoaded,
+      hasError,
       setGcodeFile,
       clear,
       layer,
@@ -145,7 +153,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currTab,
       setTab,
     }),
-    [gcodeFile, gcodeText, loading, error, setGcodeFile, clear],
+    [
+      gcodeFile,
+      gcodeText,
+      parsedInstance,
+      isLoading,
+      isLoaded,
+      hasError,
+      setGcodeFile,
+      clear,
+      layer,
+      command,
+      currTab,
+      setTab,
+    ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

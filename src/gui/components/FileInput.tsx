@@ -1,39 +1,91 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { FileText, Upload } from "lucide-react";
 import styled from "styled-components";
 
 interface FileInputProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (file: File | null) => void;
   accept?: string;
   disabled?: boolean;
 }
 
-const DropArea = styled.label<{ isDragActive: boolean; disabled?: boolean }>`
+const DropArea = styled.label<{ $isDragActive: boolean; $disabled?: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed
-    ${({ isDragActive }) => (isDragActive ? "#4f8bff" : "#94a3b8")};
-  background: ${({ isDragActive }) => (isDragActive ? "#edf6fb" : "#f6f8fa")};
-  padding: 40px 32px;
-  border-radius: 10px;
-  color: #555;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
-  transition: border-color 0.2s, background 0.2s;
-  font-size: 1.08rem;
+  gap: 10px;
+  min-height: 190px;
+  padding: 28px 24px;
+  border: 1.5px dashed
+    ${({ $isDragActive }) => ($isDragActive ? "#2563eb" : "#cbd5e1")};
+  border-radius: 12px;
+  background: ${({ $isDragActive }) => ($isDragActive ? "#eff6ff" : "#f8fafc")};
+  color: #334155;
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
+  opacity: ${({ $disabled }) => ($disabled ? 0.65 : 1)};
   text-align: center;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover,
+  &:focus-within {
+    border-color: ${({ $disabled }) => ($disabled ? "#cbd5e1" : "#2563eb")};
+    background: ${({ $disabled }) => ($disabled ? "#f8fafc" : "#eff6ff")};
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 15%);
+  }
 `;
 
 const HiddenInput = styled.input`
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
 `;
 
-const FileName = styled.div`
-  margin-top: 12px;
-  font-size: 0.96em;
-  color: #3d405b;
-  word-break: break-all;
+const UploadIcon = styled.span<{ $isDragActive: boolean }>`
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 12px;
+  background: ${({ $isDragActive }) => ($isDragActive ? "#dbeafe" : "#e2e8f0")};
+  color: #2563eb;
+  transition: background-color 0.18s ease;
+`;
+
+const Prompt = styled.strong`
+  color: #0f172a;
+  font-size: 1rem;
+`;
+
+const HelperText = styled.span`
+  color: #64748b;
+  font-size: 0.875rem;
+`;
+
+const FileName = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  margin-top: 4px;
+  padding: 7px 10px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const FileInput: React.FC<FileInputProps> = ({
@@ -41,35 +93,29 @@ const FileInput: React.FC<FileInputProps> = ({
   accept,
   disabled,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
+  const selectFile = (file: File | null) => {
     setSelectedFile(file);
     onChange(file);
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    selectFile(event.target.files?.[0] ?? null);
+    event.target.value = "";
+  };
+
   const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
-    event.stopPropagation();
     setIsDragActive(false);
     if (disabled) return;
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      const file = event.dataTransfer.files[0];
-      setSelectedFile(file);
-      onChange(file);
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
-    }
+    selectFile(event.dataTransfer.files[0] ?? null);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
-    if (disabled) return;
-    setIsDragActive(true);
+    if (!disabled) setIsDragActive(true);
   };
 
   const handleDragLeave = (event: React.DragEvent<HTMLLabelElement>) => {
@@ -77,45 +123,32 @@ const FileInput: React.FC<FileInputProps> = ({
     setIsDragActive(false);
   };
 
-  const handleLabelClick = () => {
-    if (disabled) return;
-    inputRef.current?.click();
-  };
-
   return (
     <DropArea
-      tabIndex={0}
-      isDragActive={isDragActive}
-      disabled={disabled}
-      htmlFor="file-input"
+      $isDragActive={isDragActive}
+      $disabled={disabled}
       onDragOver={handleDragOver}
       onDragEnter={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      onClick={handleLabelClick}
     >
       <HiddenInput
-        ref={inputRef}
         type="file"
-        id="file-input"
         accept={accept}
         disabled={disabled}
         onChange={handleFileChange}
       />
-      <div>
-        <span role="img" aria-label="file" style={{ fontSize: "2em" }}>
-          📄
-        </span>
-      </div>
-      <div style={{ marginTop: 8 }}>
-        <strong>Click or drag file here to select</strong>
-      </div>
-      <div style={{ fontSize: "0.97em", color: "#6c757d", marginTop: 4 }}>
-        {accept ? `Accepted: ${accept}` : "Any file type"}
-      </div>
+      <UploadIcon $isDragActive={isDragActive} aria-hidden="true">
+        <Upload size={22} />
+      </UploadIcon>
+      <Prompt>Drop your G-code file here</Prompt>
+      <HelperText>
+        or click to browse{accept ? ` · ${accept} files` : ""}
+      </HelperText>
       {selectedFile && (
-        <FileName>
-          Selected: <b>{selectedFile.name}</b>
+        <FileName title={selectedFile.name}>
+          <FileText size={16} aria-hidden="true" />
+          {selectedFile.name}
         </FileName>
       )}
     </DropArea>
