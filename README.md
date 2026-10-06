@@ -6,13 +6,13 @@ A web app tool for visualizing and analyzing G-code commands from 3D printers, C
 
 **[https://mauricioize.dev/gcode-visualizer](https://mauricioize.dev/gcode-visualizer)**
 
-### SCREENSHOTS
+<!-- ### SCREENSHOTS
 
 | Screenshot                                    |
 | --------------------------------------------- |
 | <img src="screenshots/ss1.png" width="400" /> |
 | <img src="screenshots/ss2.png" width="400" /> |
-| <img src="screenshots/ss3.png" width="400" /> |
+| <img src="screenshots/ss3.png" width="400" /> | -->
 
 ### USAGE
 
