@@ -50,7 +50,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const restCommand = useCallback(() => {
     setCommand(0);
-  }, [command, layer]);
+  }, []);
 
   const nextCommand = useCallback(() => {
     const maxCommandValue =
@@ -60,7 +60,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const prevCommand = useCallback(() => {
     setCommand(command - 1 < 0 ? 0 : command - 1);
-  }, [command, layer]);
+  }, [command]);
 
   const nextLayer = useCallback(() => {
     const maxLayerValue = (parsedInstance.current?.getLayersCount() || 1) - 1;
@@ -74,7 +74,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Reset layer to the first layer
   const resetLayer = useCallback(() => {
     setLayer(0);
-  }, [layer]);
+  }, []);
 
   const setGcodeFile = useCallback(async (file: File) => {
     setIsLoading(true);
@@ -133,6 +133,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       clear,
       layer,
       command,
+      restCommand,
+      nextCommand,
+      prevCommand,
+      nextLayer,
+      prevLayer,
+      resetLayer,
     ],
   );
 
