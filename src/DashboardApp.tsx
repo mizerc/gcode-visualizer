@@ -1,6 +1,4 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-
-// import data from "./data.json";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 import { useHashNav, TabKeys, TabsByKey } from "@/context/HashNavContext.tsx";
@@ -10,14 +8,7 @@ export function DashboardApp() {
   const CurrentPage = (TabsByKey[currTab] ?? TabKeys.FileInputPage).comp;
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
+    <SidebarProvider>
       {/* SIDEBAR */}
       <AppSidebar />
 
