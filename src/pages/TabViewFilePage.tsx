@@ -17,12 +17,6 @@ const SearchInput = styled.input`
   font-size: 14px;
 `;
 
-const Meta = styled.span`
-  font-size: 12px;
-  color: #71717a;
-  white-space: nowrap;
-`;
-
 const Viewer = styled.div`
   flex: 1;
   overflow: auto;
@@ -78,7 +72,7 @@ const renderLine = (line: string) => {
 };
 
 const TabViewFilePage: React.FC = () => {
-  const { gcodeText, gcodeFile } = useApp();
+  const { gcodeText } = useApp();
   const [query, setQuery] = useState("");
   const content = gcodeText ?? "";
   const lines = useMemo(() => content.split(/\r?\n/), [content]);

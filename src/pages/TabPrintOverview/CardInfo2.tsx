@@ -1,12 +1,12 @@
 import {
-  Activity,
-  Clock3,
   Layers3,
-  Printer,
-  ShieldCheck,
-  Thermometer,
-  Waves,
-  Weight,
+  // Activity,
+  // Clock3,
+  // Printer,
+  // ShieldCheck,
+  // Thermometer,
+  // Waves,
+  // Weight,
 } from "lucide-react";
 
 import {

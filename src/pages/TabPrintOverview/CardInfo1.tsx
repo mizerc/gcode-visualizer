@@ -1,13 +1,4 @@
-import {
-  Activity,
-  Clock3,
-  Layers3,
-  Printer,
-  ShieldCheck,
-  Thermometer,
-  Waves,
-  Weight,
-} from "lucide-react";
+import { Printer } from "lucide-react";
 
 import {
   CardContent,

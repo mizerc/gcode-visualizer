@@ -2,11 +2,10 @@ import { TabContent, TabHeaderContainer } from "@/components/tab/TabContainer";
 import { TabHeaderButton } from "@/components/tab/TabHeaderButton";
 import { useApp } from "@/context/AppContext";
 import AppContainer from "@/gui/components/AppContainer";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TabInputPage } from "./TabInputPage";
 import { TabLayerPage } from "./TabLayerPag";
 import { TabVisualizationPage } from "./TabVisualizationPage";
-import { TabLayerAnalysisPage } from "./TabPrintOverview/TabPrintOverview";
 
 export function TabPage() {
   // Tab navigation
@@ -100,7 +99,7 @@ export function TabPage() {
       <TabContent>
         {activeTab === "input" && <TabInputPage />}
         {activeTab === "layer" && <TabLayerPage />}
-        {activeTab === "analysis" && <TabLayerAnalysisPage />}
+        {activeTab === "analysis" && <TabLayerPage />}
         {activeTab === "visualization" && <TabVisualizationPage />}
       </TabContent>
     </AppContainer>

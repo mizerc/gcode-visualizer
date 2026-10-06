@@ -1,24 +1,10 @@
 import { useState } from "react";
-import { LoaderCircle, X } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import styled from "styled-components";
 import DashContContainer from "../components/gui/DashContContainer";
 import Button from "../gui/components/Button";
 import FileInput from "../gui/components/FileInput";
 import { useApp } from "../context/AppContext";
-
-const SectionLabel = styled.h3`
-  margin: 0;
-  color: #334155;
-  font-size: 1rem;
-  font-weight: 600;
-`;
-
-const Description = styled.p`
-  margin: -8px 0 0;
-  color: #64748b;
-  font-size: 0.925rem;
-  line-height: 1.5;
-`;
 
 const Divider = styled.div`
   display: flex;
@@ -56,10 +42,9 @@ const Spinner = styled(LoaderCircle)`
 `;
 
 export function TabInputPage() {
-  const { gcodeFile, isLoading: isParsing, setGcodeFile, isLoaded } = useApp();
+  const { setGcodeFile } = useApp();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [fileInputKey, setFileInputKey] = useState(0);
 
   const handleFileChange = (file: File | null) => {
     if (!file) return;
@@ -103,7 +88,6 @@ export function TabInputPage() {
     >
       {/* LOAD */}
       <FileInput
-        key={fileInputKey}
         onChange={handleFileChange}
         accept=".gcode"
         disabled={isLoading}

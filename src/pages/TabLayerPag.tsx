@@ -1,10 +1,8 @@
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
-import Heading2 from "../components/gui/Heading2";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Heading3 } from "../components/gui/Heading3";
 import TextArea from "../components/gui/TextArea";
 import Histogram from "../components/core/Histogram";
 import Label from "../components/gui/Label";
-import NavigationControl from "./TabCmdAnalysisOld/NavigationControl";
 import { GridCell } from "../components/gridold/TabGrid";
 import VList from "../components/guiv2/VList";
 import { useApp } from "../context/AppContext";
@@ -12,17 +10,7 @@ import DashContContainer from "@/components/gui/DashContContainer";
 import NavigationControlNew from "./TabCmdAnalysisOld/NavigationControlNew";
 
 export function TabLayerPage() {
-  const {
-    parsedInstance,
-    layer,
-    command,
-    prevLayer,
-    nextLayer,
-    prevCommand,
-    nextCommand,
-    restCommand,
-    resetLayer,
-  } = useApp();
+  const { parsedInstance, layer, command } = useApp();
 
   return (
     <DashContContainer

@@ -1,5 +1,4 @@
 import DashContContainer from "@/components/gui/DashContContainer";
-import TextArea from "../components/gui/TextArea";
 import { useApp } from "@/context/AppContext";
 import VList from "@/components/guiv2/VList";
 

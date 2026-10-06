@@ -10,9 +10,9 @@ A web app tool for visualizing and analyzing G-code commands from 3D printers, C
 
 | Screenshot                                    |
 | --------------------------------------------- |
-| <img src="screenshots/ss1.png" width="800" /> |
-| <img src="screenshots/ss2.png" width="800" /> |
-| <img src="screenshots/ss3.png" width="800" /> |
+| <img src="screenshots/ss1.png" width="400" /> |
+| <img src="screenshots/ss2.png" width="400" /> |
+| <img src="screenshots/ss3.png" width="400" /> |
 
 ### USAGE
 
@@ -57,3 +57,7 @@ As a former owner of an Ender 3 printer, which is famous for challenging you wit
 ### NOTES
 
 - npx shadcn@latest add button tabs card
+
+### DEPLOYMENT
+
+- Manually called with `npm run deploy`

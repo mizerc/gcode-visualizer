@@ -1,4 +1,3 @@
-import NavigationControl from "./NavigationControl";
 import { GridCell, TabGrid } from "../../components/gridold/TabGrid";
 import Grid from "../../components/gridold/Grid";
 import { useApp } from "../../context/AppContext";
@@ -8,17 +7,7 @@ import DashContContainer from "@/components/gui/DashContContainer";
 import NavigationControlNew from "./NavigationControlNew";
 
 export function TabCmdAnalysisOld() {
-  const {
-    parsedInstance,
-    layer,
-    command,
-    prevLayer,
-    nextLayer,
-    resetLayer,
-    prevCommand,
-    nextCommand,
-    restCommand,
-  } = useApp();
+  const { parsedInstance, layer, command } = useApp();
 
   return (
     <DashContContainer

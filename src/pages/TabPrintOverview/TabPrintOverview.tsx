@@ -1,8 +1,6 @@
 import {
   Activity,
   Clock3,
-  Layers3,
-  Printer,
   ShieldCheck,
   Thermometer,
   Waves,
