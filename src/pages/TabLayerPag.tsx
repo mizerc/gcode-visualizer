@@ -5,9 +5,11 @@ import TextArea from "../components/gui/TextArea";
 import Histogram from "../components/core/Histogram";
 import Label from "../components/gui/Label";
 import NavigationControl from "./TabCmdAnalysisOld/NavigationControl";
-import { GridCell } from "../components/TabGrid";
+import { GridCell } from "../components/gridold/TabGrid";
 import VList from "../components/guiv2/VList";
 import { useApp } from "../context/AppContext";
+import DashContContainer from "@/components/gui/DashContContainer";
+import NavigationControlNew from "./TabCmdAnalysisOld/NavigationControlNew";
 
 export function TabLayerPage() {
   const {
@@ -23,12 +25,14 @@ export function TabLayerPage() {
   } = useApp();
 
   return (
-    <VList>
-      <Heading2>PER-LAYER DATA</Heading2>
-
+    <DashContContainer
+      title="Per-Layer Data"
+      description="Isolate the content of each layer"
+    >
       <GridCell colStart={1} colEnd={5} rowStart={1}>
-        <Heading3>CONTROLS</Heading3>
-        <NavigationControl
+        <NavigationControlNew />
+
+        {/* <NavigationControl
           layerCount={parsedInstance.current?.getLayersCount() || 0}
           currentLayer={layer}
           commandsCount={
@@ -41,7 +45,7 @@ export function TabLayerPage() {
           onPrevCommand={prevCommand}
           onNextCommand={nextCommand}
           onResetCommand={restCommand}
-        />
+        /> */}
       </GridCell>
 
       {/* Commands of Current Layer - Left 3 columns, Rows 2-3 */}
@@ -173,6 +177,6 @@ export function TabLayerPage() {
           </BarChart>
         </div>
       </GridCell>
-    </VList>
+    </DashContContainer>
   );
 }

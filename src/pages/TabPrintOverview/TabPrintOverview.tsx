@@ -31,7 +31,7 @@ const temperatureReadings = [
   { label: "Bed", value: "60°C", detail: "Target temperature" },
 ];
 
-export function TabCmdAnalysisNew() {
+export function TabPrintOverview() {
   return (
     <DashContContainer
       title="Command Analysis"

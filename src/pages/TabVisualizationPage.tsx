@@ -1,4 +1,4 @@
-import { GridCell, TabGrid } from "../components/TabGrid";
+import { GridCell, TabGrid } from "../components/gridold/TabGrid";
 import NavigationControl from "./TabCmdAnalysisOld/NavigationControl";
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 import GcodeCanvas from "../components/core/GcodeCanvas";

@@ -1,10 +1,11 @@
 import NavigationControl from "./NavigationControl";
-import { GridCell, TabGrid } from "../../components/TabGrid";
-import Grid from "../../components/Grid";
+import { GridCell, TabGrid } from "../../components/gridold/TabGrid";
+import Grid from "../../components/gridold/Grid";
 import { useApp } from "../../context/AppContext";
 import Label from "@/components/gui/Label";
 import VList from "@/components/guiv2/VList";
 import DashContContainer from "@/components/gui/DashContContainer";
+import NavigationControlNew from "./NavigationControlNew";
 
 export function TabCmdAnalysisOld() {
   const {
@@ -27,7 +28,10 @@ export function TabCmdAnalysisOld() {
       <TabGrid>
         {/* Navigation - Full width Row 1 */}
         <GridCell colStart={1} colEnd={5} rowStart={1}>
-          <h2>Command Analysis</h2>
+          <NavigationControlNew />
+        </GridCell>
+
+        {/* <GridCell colStart={1} colEnd={5} rowStart={1}>
           <NavigationControl
             layerCount={parsedInstance.current?.getLayersCount() || 0}
             currentLayer={layer}
@@ -42,7 +46,7 @@ export function TabCmdAnalysisOld() {
             onNextCommand={nextCommand}
             onResetCommand={restCommand}
           />
-        </GridCell>
+        </GridCell> */}
 
         {/* Current Command - Left 2 columns, Row 2 */}
         <GridCell colStart={1} colEnd={3} rowStart={2}>

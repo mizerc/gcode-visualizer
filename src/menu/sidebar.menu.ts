@@ -31,6 +31,19 @@ export const sidebarMenu: SidebarMenuItem[] = [
     tabKey: TabKeys.FileInputPage,
     icon: IconFileAi,
   },
+  // print overview (cards)
+  {
+    title: "Print Overview",
+    tabKey: TabKeys.PrintOverview,
+    icon: IconDashboard,
+  },
+  // layer visualization
+  {
+    title: "Layer Visualization",
+    tabKey: TabKeys.Layer,
+    icon: IconInnerShadowTop,
+  },
+
   // viewfilefast
   {
     title: "View File Fast",
@@ -43,16 +56,16 @@ export const sidebarMenu: SidebarMenuItem[] = [
     tabKey: TabKeys.ViewFile,
     icon: IconFileDescription,
   },
-  // layer analysis old
+  // command analysis (old)
   {
     title: "Command Analysis (Old)",
     tabKey: TabKeys.CommandAnalysisOld,
     icon: IconUsers,
   },
-  // layer analysis new
+  // About
   {
-    title: "Command Analysis (New)",
-    tabKey: TabKeys.CommandAnalysisNew,
-    icon: IconDashboard,
+    title: "About",
+    tabKey: TabKeys.About,
+    icon: IconHelp,
   },
 ];

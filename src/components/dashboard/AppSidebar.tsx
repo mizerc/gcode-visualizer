@@ -72,15 +72,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       {/* FOOTER */}
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Quick Create">
-              <span>Quick Create</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        {/* <NavUser user={data.user} /> */}
+      <SidebarFooter className="border-t border-muted-foreground/20">
+        {/* Create a centralized text Mauricio Ize bold text, h3 size, height around 120px */}
+        <div className="flex items-center justify-center h-[80px]">
+          <h3 className="text-h3">Mauricio Ize</h3>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

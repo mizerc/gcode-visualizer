@@ -10,8 +10,8 @@ import TabViewFilePage from "./TabViewFilePage";
 import { TabFileInfoPage } from "./TabFileInfoPage";
 import { TabLayerPage } from "./TabLayerPag";
 import { TabCmdAnalysisOld } from "./TabCmdAnalysisOld/TabCmdAnalysisOld";
-import { TabCmdAnalysisNew } from "./TabCmdAnalysisNew/TabCmdAnalysisNew";
 import { TabViewFileFast } from "./TabViewFileFast";
+import { TabPrintOverview } from "./TabPrintOverview/TabPrintOverview";
 
 export default function DashboardPage() {
   const { currTab } = useApp();
@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
           {currTab === TabKeys.CommandAnalysisOld && <TabCmdAnalysisOld />}
 
-          {currTab === TabKeys.CommandAnalysisNew && <TabCmdAnalysisNew />}
+          {currTab === TabKeys.PrintOverview && <TabPrintOverview />}
 
           {currTab === TabKeys.Visualization && <TabVisualizationPage />}
         </div>

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { TabInputPage } from "./TabInputPage";
 import { TabLayerPage } from "./TabLayerPag";
 import { TabVisualizationPage } from "./TabVisualizationPage";
-import { TabLayerAnalysisPage } from "./TabCmdAnalysisNew/TabCmdAnalysisNew";
+import { TabLayerAnalysisPage } from "./TabPrintOverview/TabPrintOverview";
 
 export function TabPage() {
   // Tab navigation

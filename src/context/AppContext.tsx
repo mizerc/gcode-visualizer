@@ -15,10 +15,11 @@ export const TabKeys = {
   FileInfo: "fileinfo",
   Layer: "layer",
   CommandAnalysisOld: "command-analysis-old",
-  CommandAnalysisNew: "command-analysis-new",
+  PrintOverview: "print-overview",
   Visualization: "visualization",
   ViewFile: "viewfile",
   ViewFileFast: "viewfilefast",
+  About: "about",
 } as const;
 export type TabKey = (typeof TabKeys)[keyof typeof TabKeys];
 
