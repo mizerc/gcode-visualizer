@@ -40,6 +40,7 @@ const Value = styled.dd`
 export interface FieldRow {
   label: string;
   value: React.ReactNode;
+  unit?: string;
 }
 
 interface FieldTableProps extends React.HTMLAttributes<HTMLDListElement> {

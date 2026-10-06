@@ -13,18 +13,13 @@ import { GridCard } from "@/components/grid/GridCard";
 import FieldTable, { type FieldRow } from "@/components/gui/FieldTable";
 
 export function LayerAnalysisPage() {
-  const { parsedInstance, layer, command } = useApp();
+  const { parsedInstance, layer } = useApp();
 
   const generalRows: FieldRow[] = [
-    { label: "Command", value: command },
-
+    //
     {
-      label: "Command Type",
-      value: parsedInstance.current?.getCommand(layer, command)?.code || "N/A",
-    },
-    {
-      label: "Line",
-      value: parsedInstance.current?.getCommand(layer, command)?.line || "N/A",
+      label: "Total Commands",
+      value: parsedInstance.current?.getCommandsCountForLayer(layer) || 0,
     },
   ];
 
@@ -49,11 +44,7 @@ export function LayerAnalysisPage() {
       <LayerAndCommandPicker hiddeCommand />
 
       <GridContainer>
-        <GridCard
-          $colSpan={4}
-          title="General Information"
-          desc="Basic details about the G-code file."
-        >
+        <GridCard $colSpan={4} title="Layer Information">
           <FieldTable rows={generalRows} />
         </GridCard>
 

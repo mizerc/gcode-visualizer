@@ -1,17 +1,8 @@
-export class Vec2 {
-  x: number;
-  y: number;
+import { Vec2 } from "./Vec2";
 
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-
-  distanceTo(other: Vec2): number {
-    const dx = this.x - other.x;
-    const dy = this.y - other.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
+interface Layer {
+  z: number;
+  commands: Command[];
 }
 
 export interface Command {
@@ -36,12 +27,7 @@ export interface Command {
   flow_mm3_s?: number;
 }
 
-interface Layer {
-  z: number;
-  commands: Command[];
-}
-
-export class ParsedGcode {
+export class ParserV1 {
   layers: Layer[] = [];
 
   constructor(content: string) {

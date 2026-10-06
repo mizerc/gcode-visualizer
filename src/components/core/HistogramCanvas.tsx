@@ -1,4 +1,4 @@
-import type { Command } from "@/core/Parser";
+import type { Command } from "@/core/ParserV1";
 import React, { useRef, useEffect } from "react";
 
 export type Point = { x: number; y: number };

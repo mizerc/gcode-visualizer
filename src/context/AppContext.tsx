@@ -7,14 +7,14 @@ import {
   type ReactNode,
   useRef,
 } from "react";
-import { ParsedGcode } from "../core/Parser";
+import { ParserV1 } from "../core/ParserV1";
 
 interface AppContextValue {
   gcodeFile: File | null;
   gcodeText: string | null;
   isLoading: boolean;
   isLoaded: boolean;
-  parsedInstance: React.RefObject<ParsedGcode | null>;
+  parsedInstance: React.RefObject<ParserV1 | null>;
   hasError: string | null;
   setGcodeFile: (file: File) => Promise<void>;
   clear: () => void;
@@ -39,7 +39,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Hold the parsed G-code instance as text
   const [gcodeText, setGcodeText] = useState<string | null>(null);
   // Hold the parsed G-code instance as an object
-  const parsedInstance = useRef<ParsedGcode | null>(null);
+  const parsedInstance = useRef<ParserV1 | null>(null);
   // Insternal state
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -81,7 +81,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setHasError(null);
     try {
       const text = await file.text();
-      const parsed = new ParsedGcode(text);
+      const parsed = new ParserV1(text);
       parsedInstance.current = parsed;
       setFile(file);
       setGcodeText(text);

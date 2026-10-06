@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import DashContContainer from "../components/gui/DashContContainer";
-import Button from "../gui/components/Button";
-import FileInput from "../gui/components/FileInput";
+import Button from "../components/gui/Button";
+import FileInput from "../components/core/FileInput";
 import { useApp } from "../context/AppContext";
 
 const Divider = styled.div`
@@ -82,6 +82,7 @@ export function TabInputPage() {
     <DashContContainer
       title="G-CODE FILE INPUT"
       description="Choose a file from your device or drag it into the area below."
+      disableValidation={true}
     >
       {/* LOADING CASE */}
       <Row>

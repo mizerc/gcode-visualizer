@@ -2,9 +2,11 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useApp } from "@/context/AppContext";
 import { Button } from "../guiv2/Button";
+import { useHashNav } from "@/context/HashNavContext";
 
 export function Topbar() {
-  const { isLoaded, clear, currTab } = useApp();
+  const { isLoaded, clear } = useApp();
+  const { currTab } = useHashNav();
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -37,7 +39,7 @@ export function Topbar() {
         <div className="ml-auto flex items-center gap-2">
           <p
             className={`px-3 py-1 ${
-              isLoaded ? "text-green-600" : "text-muted-foreground"
+              isLoaded ? "text-green-600" : "text-red-600"
             }`}
           >
             Loaded Status: {isLoaded ? "Loaded" : "Not Loaded"}

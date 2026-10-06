@@ -8,12 +8,17 @@ const HistogramContainer = styled.div`
 `;
 
 const HistogramItem = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: 16px;
   padding: 12px 16px;
   margin-bottom: 8px;
   border-radius: 4px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(60px, 1fr) minmax(0, 2fr);
+  }
 `;
 
 const CommandCode = styled.div`
@@ -108,8 +113,11 @@ export default function Histogram({ data }: HistogramProps) {
     })
     .filter((item): item is { code: string; count: number } => item !== null);
 
+  // FIND MAX COUNT FOR PERCENTAGE CALCULATION
+  const maxCount = Math.max(...parsedData.map((item) => item.count));
+
   // HANDLE PARSING FAILURE
-  if (parsedData.length === 0) {
+  if (parsedData.length === 0 || maxCount <= 0) {
     return (
       <HistogramContainer>
         <EmptyState>Unable to parse histogram data</EmptyState>
@@ -117,13 +125,11 @@ export default function Histogram({ data }: HistogramProps) {
     );
   }
 
-  // FIND MAX COUNT FOR PERCENTAGE CALCULATION
-  const maxCount = Math.max(...parsedData.map((item) => item.count));
-
   return (
     <HistogramContainer>
       {parsedData.map((item, index) => {
-        const percentage = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
+        const percentage = (item.count / maxCount) * 100;
+
         return (
           <HistogramItem key={index}>
             {/* LABEL */}

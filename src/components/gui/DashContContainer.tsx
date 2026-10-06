@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LoaderCircle } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ interface DashContContainerProps extends Omit<
 > {
   title?: string;
   description?: string;
-  isLoading?: boolean;
+  disableValidation?: boolean;
 }
 
 const Spinner = styled(LoaderCircle)`
@@ -67,9 +68,19 @@ const DashContContainer: React.FC<DashContContainerProps> = ({
   title,
   description,
   children,
-  isLoading,
+  disableValidation,
   ...props
 }) => {
+  const { gcodeFile, isLoading } = useApp();
+
+  if (!disableValidation && !gcodeFile) {
+    return (
+      <Container title="File Info" className="text-muted-foreground">
+        No file loaded. Select a G-code file in the Input tab.
+      </Container>
+    );
+  }
+
   if (isLoading) {
     <Container {...props}>
       <Content>
@@ -77,6 +88,7 @@ const DashContContainer: React.FC<DashContContainerProps> = ({
       </Content>
     </Container>;
   }
+
   return (
     <Container {...props}>
       {/* HEADER */}

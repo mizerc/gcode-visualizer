@@ -1,25 +1,131 @@
-import { GridCell, TabGrid } from "../../components/gridold/TabGrid";
-import Grid from "../../components/gridold/Grid";
-import { useApp } from "../../context/AppContext";
+import { GridCell, TabGrid } from "../components/gridold/TabGrid";
+import Grid from "../components/gridold/Grid";
+import { useApp } from "../context/AppContext";
 import Label from "@/components/gui/Label";
 import VList from "@/components/guiv2/VList";
 import DashContContainer from "@/components/gui/DashContContainer";
-import NavigationControlNew from "../../components/core/LayerAndCommandPicker";
+import { LayerAndCommandPicker } from "@/components/core/LayerAndCommandPicker";
+import { GridContainer } from "@/components/grid/GridContainer";
+import { GridCard } from "@/components/grid/GridCard";
+import FieldTable, { type FieldRow } from "@/components/gui/FieldTable";
 
-export function TabCmdAnalysisOld() {
+export function PerCommandAnalysisPage() {
   const { parsedInstance, layer, command } = useApp();
+
+  const currentCommand = parsedInstance.current?.getCommand(layer, command);
+
+  const layerRows: FieldRow[] = [
+    {
+      label: "Total Commands",
+      value: parsedInstance.current?.getCommandsCountForLayer(layer) || 0,
+    },
+  ];
+
+  const commandRows: FieldRow[] = [
+    // Current Command
+    {
+      label: "G-Code Line",
+      value: currentCommand?.line || "N/A",
+    },
+    {
+      label: "Command Type",
+      value: currentCommand?.code || "N/A",
+    },
+
+    // Position Coordinates
+    {
+      label: "X Position",
+      value: currentCommand?.x?.toFixed(3) || "N/A",
+      unit: "mm",
+    },
+    {
+      label: "Y Position",
+      value: currentCommand?.y?.toFixed(3) || "N/A",
+      unit: "mm",
+    },
+    {
+      label: "Z Position",
+      value: currentCommand?.z?.toFixed(3) || "N/A",
+      unit: "mm",
+    },
+    {
+      label: "E Position",
+      value: currentCommand?.e?.toFixed(3) || "N/A",
+      unit: "mm",
+    },
+
+    // Movement Metrics
+    {
+      label: "Travel Distance",
+      value: currentCommand?.distance?.toFixed(3) || "0.000",
+      unit: "mm",
+    },
+    {
+      label: "Last Seen Z",
+      value: currentCommand?.last_seen_z?.toFixed(3) || "N/A",
+      unit: "mm",
+    },
+
+    // Extrusion Data
+    {
+      label: "Extruded Volume",
+      value: currentCommand?.extruded_volume_mm3?.toFixed(3) || "0.000",
+      unit: "mm³",
+    },
+    {
+      label: "Volume per Distance",
+      value: currentCommand?.volume_per_distance?.toFixed(3) || "0.000",
+      unit: "mm³/mm",
+    },
+  ];
+
+  const commandSpeedFlowRows: FieldRow[] = [
+    // Speed & Flow
+    {
+      label: "Velocity",
+      value: currentCommand?.velocity_mm_s?.toFixed(3) || "0.000",
+      unit: "mm/s",
+    },
+    {
+      label: "Feed Rate",
+      value: currentCommand?.last_seen_f_mm_s?.toFixed(3) || "N/A",
+      unit: "mm/s",
+    },
+    {
+      label: "Flow Rate",
+      value: currentCommand?.flow_mm3_s?.toFixed(3) || "0.000",
+      unit: "mm³/s",
+    },
+  ];
 
   return (
     <DashContContainer
-      title="Command Analysis (Old)"
-      description="Analysis of the G-code commands for the current print using the old method."
+      title="Per-Layer Analysis"
+      description="Isolate the content of each layer"
     >
-      <TabGrid>
-        {/* Navigation - Full width Row 1 */}
-        <GridCell colStart={1} colEnd={5} rowStart={1}>
-          <NavigationControlNew />
-        </GridCell>
+      <LayerAndCommandPicker />
 
+      <GridContainer>
+        <GridCard $colSpan={4} title="Per-Layer Information">
+          <FieldTable rows={layerRows} />
+        </GridCard>
+
+        <GridCard $colSpan={2} title="Per-Command Travel">
+          <FieldTable rows={commandRows} />
+        </GridCard>
+
+        <GridCard $colSpan={2} title="Per-Command Speed & Flow">
+          <FieldTable rows={commandSpeedFlowRows} />
+        </GridCard>
+      </GridContainer>
+    </DashContContainer>
+  );
+
+  return (
+    <DashContContainer title="Per-Command Analysis">
+      <LayerAndCommandPicker />
+
+      <TabGrid>
         {/* <GridCell colStart={1} colEnd={5} rowStart={1}>
           <NavigationControl
             layerCount={parsedInstance.current?.getLayersCount() || 0}

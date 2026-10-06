@@ -17,7 +17,7 @@ function formatSize(bytes: number): string {
 }
 
 export function TabFileInfoPage() {
-  const { gcodeFile, parsedInstance } = useApp();
+  const { gcodeFile } = useApp();
 
   if (!gcodeFile) {
     return (
@@ -37,13 +37,6 @@ export function TabFileInfoPage() {
     },
   ];
 
-  const gcodeRows: FieldRow[] = [
-    {
-      label: "# Layers",
-      value: parsedInstance.current?.getLayersCount().toString(),
-    },
-  ];
-
   return (
     <DashContContainer
       title="File Info"
@@ -56,10 +49,6 @@ export function TabFileInfoPage() {
           desc="Basic details about the G-code file."
         >
           <FieldTable rows={generalRows} />
-        </GridCard>
-
-        <GridCard $colSpan={4} title="G-code Information">
-          <FieldTable rows={gcodeRows} />
         </GridCard>
       </GridContainer>
     </DashContContainer>

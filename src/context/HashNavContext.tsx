@@ -1,10 +1,9 @@
 import { TabAboutPage } from "@/pages/TabAboutPage";
-import { TabCmdAnalysisOld } from "@/pages/TabCmdAnalysisOld/TabCmdAnalysisOld";
+import { PerCommandAnalysisPage } from "@/pages/PerCommandAnalysisPage";
 import { TabFileInfoPage } from "@/pages/TabFileInfoPage";
-import { TabInputPage } from "@/pages/TabInputPage";
+import { TabInputPage } from "@/pages/FileInputPage";
 import { LayerContentPrettyPage } from "@/pages/LayerContentPrettyPage";
 import { TabPrintOverview } from "@/pages/TabPrintOverview/TabPrintOverview";
-import { TabVisualizationPage } from "@/pages/TabVisualizationPage";
 import {
   createContext,
   useContext,
@@ -26,6 +25,7 @@ import {
 import { LayerAnalysisPage } from "@/pages/LayerAnalysisPage";
 import { FileViewPrettyPage } from "@/pages/FileViewPrettyPage";
 import { FileViewRawPage } from "@/pages/FileViewRawPage";
+import { LayerRendererPage } from "@/pages/LayerRendererPage";
 
 // Definition of a tab in the application
 type TabDef = { key: string; label: string; comp: ComponentType; icon?: Icon };
@@ -38,18 +38,19 @@ export const TabKeys = {
     comp: TabInputPage,
     icon: IconFileAi,
   },
+  FileInfo: {
+    key: "fileinfo",
+    label: "Basic File Info",
+    comp: TabFileInfoPage,
+    icon: IconFileDescription,
+  },
   PrintOverview: {
     key: "print-overview",
     label: "Print Overview",
     comp: TabPrintOverview,
     icon: IconDashboard,
   },
-  FileInfo: {
-    key: "fileinfo",
-    label: "File Info",
-    comp: TabFileInfoPage,
-    icon: IconFileDescription,
-  },
+
   LayerContent: {
     key: "layercontent",
     label: "Per-Layer File Content",
@@ -65,13 +66,13 @@ export const TabKeys = {
   CommandAnalysisOld: {
     key: "command-analysis-old",
     label: "Per-Command Analysis",
-    comp: TabCmdAnalysisOld,
+    comp: PerCommandAnalysisPage,
     icon: IconUsers,
   },
   Visualization: {
     key: "visualization",
     label: "Layer Visualization",
-    comp: TabVisualizationPage,
+    comp: LayerRendererPage,
     icon: IconInnerShadowTop,
   },
   ViewFile: {

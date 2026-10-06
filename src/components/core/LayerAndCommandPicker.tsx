@@ -4,7 +4,7 @@ import styled from "styled-components";
 /* ---------- Public component ---------- */
 
 export function LayerAndCommandPicker({
-  hiddeCommand,
+  hiddeCommand = false,
 }: {
   hiddeCommand?: boolean;
 }) {
@@ -34,6 +34,14 @@ export function LayerAndCommandPicker({
       case "ArrowLeft":
         e.preventDefault();
         prevLayer();
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        prevCommand();
+        break;
+      case "ArrowDown":
+        e.preventDefault();
+        nextCommand();
         break;
       case "Escape": // optional, if you want resetLayer on a key
         resetLayer();

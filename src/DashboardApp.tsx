@@ -5,7 +5,7 @@ import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 import { useHashNav, TabKeys, TabsByKey } from "@/context/HashNavContext.tsx";
 
-export default function DashboardPage() {
+export function DashboardApp() {
   const { currTab } = useHashNav();
   const CurrentPage = (TabsByKey[currTab] ?? TabKeys.FileInputPage).comp;
 
