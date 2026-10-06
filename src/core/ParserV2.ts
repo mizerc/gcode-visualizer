@@ -94,7 +94,7 @@ const DEFAULT_DENSITY_G_CM3 = 1.24;
 // Parser
 // ---------------------------------------------------------------------------
 
-export class ParserV1 {
+export class ParserV2 {
   layers: Layer[] = [];
 
   private readonly options: ParserOptions;
@@ -468,9 +468,9 @@ export class ParserV1 {
     const slicer =
       this.metadata.get("estimated printing time (normal mode)") ??
       this.metadata.get("time");
-    const slicerSeconds = slicer ? ParserV1.parseDuration(slicer) : 0;
+    const slicerSeconds = slicer ? ParserV2.parseDuration(slicer) : 0;
     const seconds = slicerSeconds > 0 ? slicerSeconds : this.totals.time_s;
-    return seconds > 0 ? ParserV1.formatDuration(seconds) : "Unknown";
+    return seconds > 0 ? ParserV2.formatDuration(seconds) : "Unknown";
   }
 
   getTotalMaterialUsedStr(): string {
