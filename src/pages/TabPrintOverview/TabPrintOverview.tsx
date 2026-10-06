@@ -40,14 +40,14 @@ export function TabPrintOverview() {
 
         <CardInfo2 />
 
-        <GridCard>
-          <CardHeader>
-            <CardDescription className="flex items-center gap-2">
+        <GridCard
+          title={
+            <>
               <Weight className="size-4" aria-hidden="true" />
               Material usage
-            </CardDescription>
-            <CardTitle>12.8 g</CardTitle>
-          </CardHeader>
+            </>
+          }
+        >
           <CardContent className="space-y-3">
             <div className="h-2 overflow-hidden rounded-full bg-muted">
               <div className="h-full w-[64%] rounded-full bg-primary" />

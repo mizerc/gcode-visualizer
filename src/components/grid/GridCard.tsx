@@ -1,12 +1,21 @@
+import type { ReactNode } from "react";
 import styled from "styled-components";
 
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type GridCardProps = {
   $colSpan?: 1 | 2 | 3 | 4;
-};
+  title?: ReactNode;
+  desc?: ReactNode;
+  children?: ReactNode;
+} & Omit<React.ComponentProps<typeof Card>, "children" | "title">;
 
-export const GridCard = styled(Card)<GridCardProps>`
+const StyledGridCard = styled(Card)<Pick<GridCardProps, "$colSpan">>`
   min-width: 0;
   grid-column: span 1;
   padding: 1rem;
@@ -19,3 +28,23 @@ export const GridCard = styled(Card)<GridCardProps>`
     grid-column: span ${({ $colSpan = 1 }) => $colSpan};
   }
 `;
+
+export function GridCard({ title, desc, children, ...props }: GridCardProps) {
+  const hasHeader = title !== undefined || desc !== undefined;
+
+  return (
+    <StyledGridCard {...props}>
+      {hasHeader && (
+        <CardHeader>
+          {title !== undefined && <CardTitle>{title}</CardTitle>}
+          {desc !== undefined && (
+            <CardDescription className="flex items-center gap-2">
+              {desc}
+            </CardDescription>
+          )}
+        </CardHeader>
+      )}
+      {children}
+    </StyledGridCard>
+  );
+}

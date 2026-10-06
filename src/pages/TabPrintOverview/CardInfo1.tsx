@@ -29,6 +29,7 @@ export function CardInfo1() {
           <Printer className="size-4" aria-hidden="true" />
           Print overview
         </CardDescription>
+
         {/* FILENAME */}
         <CardTitle className="text-xl">
           {parsedInstance.current.getFileName()}

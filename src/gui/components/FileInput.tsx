@@ -10,6 +10,7 @@ interface FileInputProps {
 
 const DropArea = styled.label<{ $isDragActive: boolean; $disabled?: boolean }>`
   position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

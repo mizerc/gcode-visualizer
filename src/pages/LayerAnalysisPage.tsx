@@ -9,31 +9,16 @@ import { useApp } from "../context/AppContext";
 import DashContContainer from "@/components/gui/DashContContainer";
 import NavigationControlNew from "./TabCmdAnalysisOld/NavigationControlNew";
 
-export function TabLayerPage() {
+export function LayerAnalysisPage() {
   const { parsedInstance, layer, command } = useApp();
 
   return (
     <DashContContainer
-      title="Per-Layer Data"
+      title="Per-Layer Analysis"
       description="Isolate the content of each layer"
     >
       <GridCell colStart={1} colEnd={5} rowStart={1}>
         <NavigationControlNew />
-
-        {/* <NavigationControl
-          layerCount={parsedInstance.current?.getLayersCount() || 0}
-          currentLayer={layer}
-          commandsCount={
-            parsedInstance.current?.getCommandsCountForLayer(layer) || 0
-          }
-          currentCommand={command}
-          onPrevLayer={prevLayer}
-          onNextLayer={nextLayer}
-          onResetLayer={resetLayer}
-          onPrevCommand={prevCommand}
-          onNextCommand={nextCommand}
-          onResetCommand={restCommand}
-        /> */}
       </GridCell>
 
       {/* Commands of Current Layer - Left 3 columns, Rows 2-3 */}

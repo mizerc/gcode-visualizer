@@ -1,7 +1,8 @@
 import { useApp } from "@/context/AppContext";
 import FieldTable, { type FieldRow } from "@/components/gui/FieldTable";
 import DashContContainer from "@/components/gui/DashContContainer";
-import DashSection from "@/components/gui/DashSection";
+import { GridContainer } from "@/components/grid/GridContainer";
+import { GridCard } from "@/components/grid/GridCard";
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -48,13 +49,19 @@ export function TabFileInfoPage() {
       title="File Info"
       description="Details about the loaded G-code file."
     >
-      <DashSection title="General">
-        <FieldTable rows={generalRows} />
-      </DashSection>
-      {/* Title 2 */}
-      <DashSection title="PARSED GCODE">
-        <FieldTable rows={gcodeRows} />
-      </DashSection>
+      <GridContainer>
+        <GridCard
+          $colSpan={4}
+          title="General Information"
+          desc="Basic details about the G-code file."
+        >
+          <FieldTable rows={generalRows} />
+        </GridCard>
+
+        <GridCard $colSpan={4} title="G-code Information">
+          <FieldTable rows={gcodeRows} />
+        </GridCard>
+      </GridContainer>
     </DashContContainer>
   );
 }

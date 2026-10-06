@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { LoaderCircle } from "lucide-react";
 import styled from "styled-components";
 import DashContContainer from "../components/gui/DashContContainer";
 import Button from "../gui/components/Button";
@@ -31,14 +30,12 @@ const ErrorMessage = styled.p`
   font-size: 0.875rem;
 `;
 
-const Spinner = styled(LoaderCircle)`
-  animation: spin 0.8s linear infinite;
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
 `;
 
 export function TabInputPage() {
@@ -86,20 +83,28 @@ export function TabInputPage() {
       title="G-CODE FILE INPUT"
       description="Choose a file from your device or drag it into the area below."
     >
-      {/* LOAD */}
-      <FileInput
-        onChange={handleFileChange}
-        accept=".gcode"
-        disabled={isLoading}
-      />
-      <Divider>or</Divider>
       {/* LOADING CASE */}
-      <Button onClick={readFromExample} disabled={isLoading}>
-        {isLoading && <Spinner size={18} aria-hidden="true" />}
-        {isLoading ? "Loading example..." : "Load example file"}
-      </Button>
+      <Row>
+        <Button onClick={readFromExample} disabled={isLoading}>
+          Load example
+        </Button>
+      </Row>
+
+      {/* OR DIVIDER */}
+      <Divider>or</Divider>
+
+      {/* LOAD FROM FILE */}
+      <Row>
+        <FileInput
+          onChange={handleFileChange}
+          accept=".gcode"
+          disabled={isLoading}
+        />
+      </Row>
+
       {/* ERRROR */}
       {errorMessage && <ErrorMessage role="alert">{errorMessage}</ErrorMessage>}
+
       {/* STATUS MESSAGE */}
       <span role="status" aria-live="polite">
         {isLoading ? "Loading example G-code file." : ""}

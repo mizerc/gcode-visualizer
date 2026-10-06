@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { LoaderCircle } from "lucide-react";
 
 const Container = styled.div`
   display: flex;
@@ -30,13 +31,33 @@ const Description = styled.p`
   font-size: 0.875rem;
 `;
 
+const Content = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-height: 0;
+`;
+
 interface DashContContainerProps extends Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "title"
 > {
   title?: string;
   description?: string;
+  isLoading?: boolean;
 }
+
+const Spinner = styled(LoaderCircle)`
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
 
 /**
  * DashContContainer component
@@ -46,17 +67,30 @@ const DashContContainer: React.FC<DashContContainerProps> = ({
   title,
   description,
   children,
+  isLoading,
   ...props
-}) => (
-  <Container {...props}>
-    {(title || description) && (
-      <Header>
-        {title && <Title>{title}</Title>}
-        {description && <Description>{description}</Description>}
-      </Header>
-    )}
-    {children}
-  </Container>
-);
+}) => {
+  if (isLoading) {
+    <Container {...props}>
+      <Content>
+        <Spinner></Spinner>
+      </Content>
+    </Container>;
+  }
+  return (
+    <Container {...props}>
+      {/* HEADER */}
+      {(title || description) && (
+        <Header>
+          {title && <Title>{title}</Title>}
+          {description && <Description>{description}</Description>}
+        </Header>
+      )}
+
+      {/* CONTENT */}
+      <Content>{children}</Content>
+    </Container>
+  );
+};
 
 export default DashContContainer;

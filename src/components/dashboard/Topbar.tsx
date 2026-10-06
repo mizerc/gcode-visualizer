@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useApp } from "@/context/AppContext";
+import { Button } from "../guiv2/Button";
 
 export function Topbar() {
   const { isLoaded, clear, currTab } = useApp();
@@ -17,55 +17,42 @@ export function Topbar() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
+
         {/* CURRENT TAB DISPLAY */}
         <div className="flex flex-row gap-1">
           {/* create a border around tabname */}
           <p>Current Tab:</p>
-          <span className="border border-gray-300 rounded px-2 py-1 text-sm">
+          <span className="border border-gray-300 rounded text-sm p-2">
             {currTab}
           </span>
         </div>
 
-        {/* DOCUMENTS HEADER */}
-        <h1 className="text-base font-medium">Documents</h1>
-
-        {/* GITHUB */}
-        <div className="ml-auto flex items-center gap-2">
-          <Button
-            nativeButton={false}
-            variant="ghost"
-            size="sm"
-            className="hidden sm:flex"
-            render={
-              <a
-                href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="dark:text-foreground"
-              />
-            }
-          >
-            GitHub
-          </Button>
-        </div>
+        {/* SEPARATOR */}
+        <Separator
+          orientation="vertical"
+          className="mx-2 data-[orientation=vertical]:h-4"
+        />
 
         {/* SHOW LOADED STATUS */}
-        <p>Loaded Status: {isLoaded ? "Loaded" : "Not Loaded"}</p>
-
-        {/* IF LOADED, RENDER UNLOAD BUTTON */}
-        {isLoaded && (
-          <Button
-            nativeButton={false}
-            variant="secondary"
-            size="sm"
-            className="ml-2"
-            onClick={() => {
-              clear();
-            }}
+        <div className="ml-auto flex items-center gap-2">
+          <p
+            className={`px-3 py-1 ${
+              isLoaded ? "text-green-600" : "text-muted-foreground"
+            }`}
           >
-            Unload
-          </Button>
-        )}
+            Loaded Status: {isLoaded ? "Loaded" : "Not Loaded"}
+          </p>
+          {/* IF LOADED, RENDER UNLOAD BUTTON */}
+          {isLoaded && (
+            <Button
+              onClick={() => {
+                clear();
+              }}
+            >
+              Unload
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   );

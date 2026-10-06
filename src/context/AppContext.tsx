@@ -9,20 +9,6 @@ import {
 } from "react";
 import { ParsedGcode } from "../core/Parser";
 
-// Navigation
-export const TabKeys = {
-  FileInputPage: "input",
-  FileInfo: "fileinfo",
-  Layer: "layer",
-  CommandAnalysisOld: "command-analysis-old",
-  PrintOverview: "print-overview",
-  Visualization: "visualization",
-  ViewFile: "viewfile",
-  ViewFileFast: "viewfilefast",
-  About: "about",
-} as const;
-export type TabKey = (typeof TabKeys)[keyof typeof TabKeys];
-
 interface AppContextValue {
   gcodeFile: File | null;
   gcodeText: string | null;
@@ -42,9 +28,6 @@ interface AppContextValue {
   nextLayer: () => void;
   prevLayer: () => void;
   resetLayer: () => void;
-  // Tab
-  currTab: TabKey;
-  setTab: (tab: TabKey) => void;
 }
 
 // Not exported: nobody should use this directly
@@ -64,8 +47,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Layer and command state
   const [layer, setLayer] = useState(0);
   const [command, setCommand] = useState(0);
-  // Tab state
-  const [currTab, setCurrTab] = useState<TabKey>("input");
 
   const restCommand = useCallback(() => {
     setCommand(0);
@@ -120,11 +101,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setHasError(null);
   }, []);
 
-  const setTab = useCallback((tab: TabKey) => {
-    console.log(`Switching to tab: ${tab}`);
-    setCurrTab(tab);
-  }, []);
-
   const value = useMemo(
     () => ({
       gcodeFile,
@@ -145,8 +121,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       nextLayer,
       prevLayer,
       resetLayer,
-      currTab,
-      setTab,
     }),
     [
       gcodeFile,
@@ -159,8 +133,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       clear,
       layer,
       command,
-      currTab,
-      setTab,
     ],
   );
 

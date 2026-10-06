@@ -1,7 +1,4 @@
-"use client";
-
 import * as React from "react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -14,11 +11,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { SidebarLogo } from "./DashLogo";
-import { useApp } from "@/context/AppContext";
-import { sidebarMenu } from "@/menu/sidebar.menu";
+import { TabKeys, useHashNav } from "@/context/HashNavContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { setTab } = useApp();
+  const { currTab, setTab } = useHashNav();
 
   return (
     <Sidebar {...props}>
@@ -33,15 +29,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sidebarMenu.map((item) => (
-                <SidebarMenuItem key={item.tabKey}>
+              {Object.values(TabKeys).map((tab) => (
+                <SidebarMenuItem key={tab.key}>
                   <SidebarMenuButton
-                    tooltip={item.title}
-                    className="pl-4!"
-                    onClick={() => setTab(item.tabKey)}
+                    tooltip={tab.label}
+                    className="pl-4! cursor-pointer data-[active=true]:bg-blue-600 data-[active=true]:text-white data-[active=true]:font-semibold"
+                    isActive={currTab === tab.key}
+                    onClick={() => setTab(tab.key)}
                   >
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
+                    <span>{tab.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

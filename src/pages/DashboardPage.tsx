@@ -3,18 +3,11 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 // import data from "./data.json";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
-import { TabInputPage } from "./TabInputPage";
-import { TabKeys, useApp } from "@/context/AppContext";
-import { TabVisualizationPage } from "./TabVisualizationPage";
-import TabViewFilePage from "./TabViewFilePage";
-import { TabFileInfoPage } from "./TabFileInfoPage";
-import { TabLayerPage } from "./TabLayerPag";
-import { TabCmdAnalysisOld } from "./TabCmdAnalysisOld/TabCmdAnalysisOld";
-import { TabViewFileFast } from "./TabViewFileFast";
-import { TabPrintOverview } from "./TabPrintOverview/TabPrintOverview";
+import { useHashNav, TabKeys, TabsByKey } from "@/context/HashNavContext.tsx";
 
 export default function DashboardPage() {
-  const { currTab } = useApp();
+  const { currTab } = useHashNav();
+  const CurrentPage = (TabsByKey[currTab] ?? TabKeys.FileInputPage).comp;
 
   return (
     <SidebarProvider
@@ -35,21 +28,7 @@ export default function DashboardPage() {
 
         {/* MAIN CONTENT */}
         <div className="flex flex-1 flex-col">
-          {currTab === TabKeys.FileInputPage && <TabInputPage />}
-
-          {currTab === TabKeys.ViewFileFast && <TabViewFileFast />}
-
-          {currTab === TabKeys.ViewFile && <TabViewFilePage />}
-
-          {currTab === TabKeys.FileInfo && <TabFileInfoPage />}
-
-          {currTab === TabKeys.Layer && <TabLayerPage />}
-
-          {currTab === TabKeys.CommandAnalysisOld && <TabCmdAnalysisOld />}
-
-          {currTab === TabKeys.PrintOverview && <TabPrintOverview />}
-
-          {currTab === TabKeys.Visualization && <TabVisualizationPage />}
+          <CurrentPage />
         </div>
       </SidebarInset>
     </SidebarProvider>
