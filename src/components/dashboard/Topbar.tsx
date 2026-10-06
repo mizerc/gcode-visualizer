@@ -3,8 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useApp } from "@/context/AppContext";
 
-export function SiteHeader() {
-  const { isLoaded, clear } = useApp();
+export function Topbar() {
+  const { isLoaded, clear, currTab } = useApp();
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -17,9 +17,19 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
+        {/* CURRENT TAB DISPLAY */}
+        <div className="flex flex-row gap-1">
+          {/* create a border around tabname */}
+          <p>Current Tab:</p>
+          <span className="border border-gray-300 rounded px-2 py-1 text-sm">
+            {currTab}
+          </span>
+        </div>
+
+        {/* DOCUMENTS HEADER */}
         <h1 className="text-base font-medium">Documents</h1>
 
-        {/* ACTIONS */}
+        {/* GITHUB */}
         <div className="ml-auto flex items-center gap-2">
           <Button
             nativeButton={false}

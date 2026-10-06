@@ -33,7 +33,7 @@ import { SidebarLogo } from "./DashLogo";
 import { useApp } from "@/context/AppContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { currTab, setTab } = useApp();
+  const { setTab } = useApp();
 
   return (
     <Sidebar {...props}>

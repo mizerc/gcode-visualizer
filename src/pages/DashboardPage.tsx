@@ -1,8 +1,8 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 // import data from "./data.json";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { SiteHeader } from "@/components/dashboard/site-header";
+import { AppSidebar } from "@/components/dashboard/AppSidebar";
+import { Topbar } from "@/components/dashboard/Topbar";
 import { TabInputPage } from "./TabInputPage";
 import { useApp } from "@/context/AppContext";
 import { TabVisualizationPage } from "./TabVisualizationPage";
@@ -29,7 +29,7 @@ export default function DashboardPage() {
       {/* CONTENT */}
       <SidebarInset>
         {/* MAIN TOPBAR */}
-        <SiteHeader />
+        <Topbar />
 
         {/* MAIN CONTENT */}
         <div className="flex flex-1 flex-col">
