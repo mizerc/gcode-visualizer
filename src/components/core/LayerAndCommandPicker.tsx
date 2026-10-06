@@ -1,8 +1,13 @@
 import { useApp } from "@/context/AppContext";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 /* ---------- Public component ---------- */
 
-export default function NavigationControlNew() {
+export function LayerAndCommandPicker({
+  hiddeCommand,
+}: {
+  hiddeCommand?: boolean;
+}) {
   const {
     parsedInstance,
     layer,
@@ -15,6 +20,36 @@ export default function NavigationControlNew() {
     restCommand,
   } = useApp();
 
+  // Add keyboard listeners for layer and command navigation
+  const keyInputHandler = (e: KeyboardEvent) => {
+    // Don't hijack arrows while typing
+    const t = e.target as HTMLElement;
+    if (t.matches("input, textarea, select, [contenteditable='true']")) return;
+
+    switch (e.key) {
+      case "ArrowRight":
+        e.preventDefault();
+        nextLayer();
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        prevLayer();
+        break;
+      case "Escape": // optional, if you want resetLayer on a key
+        resetLayer();
+        break;
+    }
+  };
+  const active = true; // or a condition, e.g. isOpen
+  const ref = useRef(keyInputHandler);
+  ref.current = keyInputHandler;
+  useEffect(() => {
+    if (!active) return;
+    const fn = (e: KeyboardEvent) => ref.current(e);
+    document.addEventListener("keydown", fn);
+    return () => document.removeEventListener("keydown", fn);
+  }, [active]);
+
   // Adjust these two lines to match the shape of parsedInstance.
   const layerCount = parsedInstance.current?.getLayersCount() || 0;
 
@@ -23,6 +58,7 @@ export default function NavigationControlNew() {
 
   return (
     <Panel aria-label="Playback navigation">
+      {/* LAYER NAVIGATION */}
       <Stepper
         label="Layer"
         current={layer}
@@ -31,18 +67,32 @@ export default function NavigationControlNew() {
         onNext={nextLayer}
         onReset={resetLayer}
       />
-      <Stepper
-        label="Command"
-        current={command}
-        total={commandsCount}
-        onPrev={prevCommand}
-        onNext={nextCommand}
-        onReset={restCommand}
-      />
-      <Hint>
-        <Kbd>↑</Kbd> <Kbd>↓</Kbd> change layer · <Kbd>←</Kbd> <Kbd>→</Kbd>{" "}
-        change command
-      </Hint>
+
+      {/* COMMAND NAVIGATION */}
+      {!hiddeCommand && (
+        <Stepper
+          label="Command"
+          current={command}
+          total={commandsCount}
+          onPrev={prevCommand}
+          onNext={nextCommand}
+          onReset={restCommand}
+        />
+      )}
+
+      {/* KEYBOARD HINT */}
+      {!hiddeCommand && (
+        <Hint>
+          <Kbd>↑</Kbd> <Kbd>↓</Kbd> change command · <Kbd>←</Kbd> <Kbd>→</Kbd>
+          change layer
+        </Hint>
+      )}
+      {hiddeCommand && (
+        <Hint>
+          <Kbd>←</Kbd> <Kbd>→</Kbd>
+          change layer
+        </Hint>
+      )}
     </Panel>
   );
 }

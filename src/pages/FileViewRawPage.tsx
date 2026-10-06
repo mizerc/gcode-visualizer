@@ -2,7 +2,7 @@ import DashContContainer from "@/components/gui/DashContContainer";
 import { useApp } from "@/context/AppContext";
 import VList from "@/components/guiv2/VList";
 
-export function TabViewFileFast() {
+export function FileViewRawPage() {
   const { gcodeText } = useApp();
   return (
     <DashContContainer title="File Content">

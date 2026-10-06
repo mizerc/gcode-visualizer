@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const HistogramContainer = styled.div`
-  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
   padding: 24px;
   border-radius: 4px;
   border: 2px solid #e2e8f0;
@@ -14,23 +13,14 @@ const HistogramItem = styled.div`
   gap: 16px;
   padding: 12px 16px;
   margin-bottom: 8px;
-  background: white;
   border-radius: 4px;
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
-  
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;
 
 const CommandCode = styled.div`
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-  font-size: 14px;
-  font-weight: 700;
-  color: #3b82f6;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.8rem;
   min-width: 60px;
-  padding: 6px 12px;
+  padding: 6px;
   background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
   border-radius: 4px;
   text-align: center;
@@ -61,9 +51,9 @@ const BarFill = styled.div<{ percentage: number }>`
   transition: width 0.3s ease;
   border-radius: 2px;
   position: relative;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -79,7 +69,7 @@ const CountLabel = styled.div`
   color: #475569;
   min-width: 80px;
   text-align: right;
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
 `;
 
 const EmptyState = styled.div`
@@ -94,6 +84,7 @@ interface HistogramProps {
 }
 
 export default function Histogram({ data }: HistogramProps) {
+  // EMPTY DATA
   if (!data || data.length === 0) {
     return (
       <HistogramContainer>
@@ -102,7 +93,7 @@ export default function Histogram({ data }: HistogramProps) {
     );
   }
 
-  // Parse the histogram data
+  // PARSE THE HISTOGRAM DATA
   const parsedData = data
     .map((line) => {
       // Format: "G1: 1234" or similar
@@ -117,6 +108,7 @@ export default function Histogram({ data }: HistogramProps) {
     })
     .filter((item): item is { code: string; count: number } => item !== null);
 
+  // HANDLE PARSING FAILURE
   if (parsedData.length === 0) {
     return (
       <HistogramContainer>
@@ -125,7 +117,7 @@ export default function Histogram({ data }: HistogramProps) {
     );
   }
 
-  // Find max count for percentage calculation
+  // FIND MAX COUNT FOR PERCENTAGE CALCULATION
   const maxCount = Math.max(...parsedData.map((item) => item.count));
 
   return (
@@ -134,7 +126,9 @@ export default function Histogram({ data }: HistogramProps) {
         const percentage = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
         return (
           <HistogramItem key={index}>
+            {/* LABEL */}
             <CommandCode>{item.code}</CommandCode>
+            {/* COL 2 */}
             <BarContainer>
               <BarBackground>
                 <BarFill percentage={percentage} />
@@ -147,4 +141,3 @@ export default function Histogram({ data }: HistogramProps) {
     </HistogramContainer>
   );
 }
-

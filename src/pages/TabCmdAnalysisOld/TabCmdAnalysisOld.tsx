@@ -4,7 +4,7 @@ import { useApp } from "../../context/AppContext";
 import Label from "@/components/gui/Label";
 import VList from "@/components/guiv2/VList";
 import DashContContainer from "@/components/gui/DashContContainer";
-import NavigationControlNew from "./NavigationControlNew";
+import NavigationControlNew from "../../components/core/LayerAndCommandPicker";
 
 export function TabCmdAnalysisOld() {
   const { parsedInstance, layer, command } = useApp();

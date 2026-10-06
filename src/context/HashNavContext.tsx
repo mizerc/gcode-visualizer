@@ -2,10 +2,8 @@ import { TabAboutPage } from "@/pages/TabAboutPage";
 import { TabCmdAnalysisOld } from "@/pages/TabCmdAnalysisOld/TabCmdAnalysisOld";
 import { TabFileInfoPage } from "@/pages/TabFileInfoPage";
 import { TabInputPage } from "@/pages/TabInputPage";
-import { LayerViewPage } from "@/pages/LayerViewPage";
+import { LayerContentPrettyPage } from "@/pages/LayerContentPrettyPage";
 import { TabPrintOverview } from "@/pages/TabPrintOverview/TabPrintOverview";
-import { TabViewFileFast } from "@/pages/TabViewFileFast";
-import TabViewFilePage from "@/pages/TabViewFilePage";
 import { TabVisualizationPage } from "@/pages/TabVisualizationPage";
 import {
   createContext,
@@ -26,6 +24,8 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { LayerAnalysisPage } from "@/pages/LayerAnalysisPage";
+import { FileViewPrettyPage } from "@/pages/FileViewPrettyPage";
+import { FileViewRawPage } from "@/pages/FileViewRawPage";
 
 // Definition of a tab in the application
 type TabDef = { key: string; label: string; comp: ComponentType; icon?: Icon };
@@ -53,7 +53,7 @@ export const TabKeys = {
   LayerContent: {
     key: "layercontent",
     label: "Per-Layer File Content",
-    comp: LayerViewPage,
+    comp: LayerContentPrettyPage,
     icon: IconInnerShadowTop,
   },
   LayerAnalysis: {
@@ -77,13 +77,13 @@ export const TabKeys = {
   ViewFile: {
     key: "viewfile",
     label: "View File Pretty",
-    comp: TabViewFilePage,
+    comp: FileViewPrettyPage,
     icon: IconFileDescription,
   },
   ViewFileFast: {
     key: "viewfilefast",
     label: "View File Raw",
-    comp: TabViewFileFast,
+    comp: FileViewRawPage,
     icon: IconFileDescription,
   },
   About: { key: "about", label: "About", comp: TabAboutPage, icon: IconHelp },
@@ -93,9 +93,13 @@ export const TabKeys = {
 export type TabKey = (typeof TabKeys)[keyof typeof TabKeys]["key"];
 
 // Lookup by key string (built once, module level)
+type TabByKey = {
+  [Tab in (typeof TabKeys)[keyof typeof TabKeys] as Tab["key"]]: Tab;
+};
+
 export const TabsByKey = Object.fromEntries(
-  Object.values(TabKeys).map((t) => [t.key, t]),
-) as Record<TabKey, TabDef>;
+  Object.values(TabKeys).map((tab) => [tab.key, tab]),
+) as TabByKey satisfies Record<TabKey, TabDef>;
 
 interface AppContextValue {
   currTab: TabKey;
