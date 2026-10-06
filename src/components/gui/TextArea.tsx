@@ -1,37 +1,55 @@
 import styled from "styled-components";
 
 const TextArea = styled.textarea`
-  min-height: 6000px;
-
-  margin: 16px;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 24rem;
+  height: min(72vh, 56rem);
+  margin: 0;
   padding: 16px;
-  border: 2px solid rgb(10, 10, 10);
+  border: 1px solid #d4d4d8;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
 
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 13px;
-  line-height: 1.6;
-  color: #1e293b;
-  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-  overflow-y: auto;
+  line-height: 1.65;
+  color: #27272a;
+  background: #fafafa;
+  white-space: pre;
+  overflow: auto;
   resize: vertical;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 
   &:focus {
     outline: none;
     background: white;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 16%);
   }
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 0;
+    background: #f4f4f5;
+    border-radius: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: 0;
+    background: #a1a1aa;
+    border: 2px solid #f4f4f5;
+    border-radius: 8px;
+
+    &:hover {
+      background: #71717a;
+    }
   }
 `;
 

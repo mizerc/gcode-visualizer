@@ -4,7 +4,7 @@ import { Heading3 } from "../components/gui/Heading3";
 import TextArea from "../components/gui/TextArea";
 import Histogram from "../components/core/Histogram";
 import Label from "../components/gui/Label";
-import NavigationControl from "../components/NavigationControl";
+import NavigationControl from "./TabCmdAnalysisOld/NavigationControl";
 import { GridCell } from "../components/TabGrid";
 import VList from "../components/guiv2/VList";
 import { useApp } from "../context/AppContext";

@@ -1,0 +1,92 @@
+{/* ITEM 1 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Input"
+                  className="pl-4!"
+                  onClick={() => setTab("input")}
+                >
+                  <IconDashboard />
+                  <span>Open File</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Input"
+                  className="pl-4!"
+                  onClick={() => setTab("viewfilefast")}
+                >
+                  <IconFileDescription />
+                  <span>View File (fast)</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Input"
+                  className="pl-4!"
+                  onClick={() => setTab("viewfile")}
+                >
+                  <IconFileDescription />
+                  <span>View File (slow)</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="File Info"
+                  className="pl-4!"
+                  onClick={() => setTab("fileinfo")}
+                >
+                  <IconFileDescription />
+                  <span>File Info</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Layer Analysis"
+                  className="pl-4!"
+                  onClick={() => setTab("layeranalysisold")}
+                >
+                  <IconChartBar />
+                  <span>Layer Analysis</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Layer Analysis"
+                  className="pl-4!"
+                  onClick={() => setTab("layeranalysisnew")}
+                >
+                  <IconChartBar />
+                  <span>Layer Analysis</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Analyse"
+                  className="pl-4!"
+                  onClick={() => setTab("layer")}
+                >
+                  <IconListDetails />
+                  <span>Analyse</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* ITEM 2 */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Analyse"
+                  className="pl-4!"
+                  onClick={() => setTab("visualization")}
+                >
+                  <IconDashboard />
+                  <span>Visualize</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>

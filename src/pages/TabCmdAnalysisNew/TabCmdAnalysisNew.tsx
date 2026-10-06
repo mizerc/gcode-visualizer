@@ -18,8 +18,9 @@ import {
 import { GridContainer } from "@/components/grid/GridContainer";
 import { GridCard } from "@/components/grid/GridCard";
 import DashContContainer from "@/components/gui/DashContContainer";
+import { CardInfo1 } from "./CardInfo1";
+import { CardInfo2 } from "./CardInfo2";
 
-const layerHeights = [34, 47, 61, 76, 89, 100, 94, 82, 68, 52, 38, 24];
 const movementBreakdown = [
   { label: "Print moves", value: 68, color: "bg-primary" },
   { label: "Travel moves", value: 22, color: "bg-sky-500" },
@@ -30,76 +31,16 @@ const temperatureReadings = [
   { label: "Bed", value: "60°C", detail: "Target temperature" },
 ];
 
-function Metric({
-  label,
-  value,
-  detail,
-}: {
-  label: string;
-  value: string;
-  detail?: string;
-}) {
-  return (
-    <div className="space-y-1">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="text-2xl font-semibold tabular-nums">{value}</p>
-      {detail && <p className="text-xs text-muted-foreground">{detail}</p>}
-    </div>
-  );
-}
-
-export function TabLayerAnalysisPage() {
+export function TabCmdAnalysisNew() {
   return (
     <DashContContainer
-      title="File analysis"
-      description="A quick look at print settings, layer quality, and estimated usage. Mock data for preview."
+      title="Command Analysis"
+      description="Analysis of the G-code commands for the current print."
     >
       <GridContainer aria-label="G-code file analysis">
-        <GridCard $colSpan={2}>
-          <CardHeader>
-            <CardDescription className="flex items-center gap-2">
-              <Printer className="size-4" aria-hidden="true" />
-              Print overview
-            </CardDescription>
-            <CardTitle className="text-xl">benchy_sample.gcode</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-              <Metric label="Total layers" value="248" />
-              <Metric label="Print time" value="3h 42m" />
-              <Metric label="Filament" value="12.8 g" />
-              <Metric label="Nozzle" value="0.4 mm" />
-            </div>
-          </CardContent>
-        </GridCard>
+        <CardInfo1 />
 
-        <GridCard>
-          <CardHeader>
-            <CardDescription className="flex items-center gap-2">
-              <Layers3 className="size-4" aria-hidden="true" />
-              Layer profile
-            </CardDescription>
-            <CardTitle>0.20 mm</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div
-              className="flex h-16 items-end gap-1"
-              role="img"
-              aria-label="Mock layer height profile across the print"
-            >
-              {layerHeights.map((height, index) => (
-                <div
-                  key={index}
-                  className="flex-1 rounded-t-sm bg-primary/70"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Consistent height across the model
-            </p>
-          </CardContent>
-        </GridCard>
+        <CardInfo2 />
 
         <GridCard>
           <CardHeader>

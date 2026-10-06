@@ -4,12 +4,14 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 import { TabInputPage } from "./TabInputPage";
-import { useApp } from "@/context/AppContext";
+import { TabKeys, useApp } from "@/context/AppContext";
 import { TabVisualizationPage } from "./TabVisualizationPage";
 import TabViewFilePage from "./TabViewFilePage";
 import { TabFileInfoPage } from "./TabFileInfoPage";
-import { TabLayerAnalysisPage } from "./TabLayerAnalysisPage";
 import { TabLayerPage } from "./TabLayerPag";
+import { TabCmdAnalysisOld } from "./TabCmdAnalysisOld/TabCmdAnalysisOld";
+import { TabCmdAnalysisNew } from "./TabCmdAnalysisNew/TabCmdAnalysisNew";
+import { TabViewFileFast } from "./TabViewFileFast";
 
 export default function DashboardPage() {
   const { currTab } = useApp();
@@ -33,17 +35,21 @@ export default function DashboardPage() {
 
         {/* MAIN CONTENT */}
         <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <p>{currTab}</p>
-              {currTab === "input" && <TabInputPage />}
-              {currTab === "viewfile" && <TabViewFilePage />}
-              {currTab === "fileinfo" && <TabFileInfoPage />}
-              {currTab === "layer" && <TabLayerPage />}
-              {currTab === "analysis" && <TabLayerAnalysisPage />}
-              {currTab === "visualization" && <TabVisualizationPage />}
-            </div>
-          </div>
+          {currTab === TabKeys.FileInputPage && <TabInputPage />}
+
+          {currTab === TabKeys.ViewFileFast && <TabViewFileFast />}
+
+          {currTab === TabKeys.ViewFile && <TabViewFilePage />}
+
+          {currTab === TabKeys.FileInfo && <TabFileInfoPage />}
+
+          {currTab === TabKeys.Layer && <TabLayerPage />}
+
+          {currTab === TabKeys.CommandAnalysisOld && <TabCmdAnalysisOld />}
+
+          {currTab === TabKeys.CommandAnalysisNew && <TabCmdAnalysisNew />}
+
+          {currTab === TabKeys.Visualization && <TabVisualizationPage />}
         </div>
       </SidebarInset>
     </SidebarProvider>

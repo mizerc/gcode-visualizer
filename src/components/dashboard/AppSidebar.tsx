@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLogo } from "./DashLogo";
 import { useApp } from "@/context/AppContext";
+import { sidebarMenu } from "@/menu/sidebar.menu";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { setTab } = useApp();
@@ -48,75 +49,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {/* ITEM 1 */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Input"
-                  className="pl-4!"
-                  onClick={() => setTab("input")}
-                >
-                  <IconDashboard />
-                  <span>Open</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Input"
-                  className="pl-4!"
-                  onClick={() => setTab("viewfile")}
-                >
-                  <IconFileDescription />
-                  <span>View File</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="File Info"
-                  className="pl-4!"
-                  onClick={() => setTab("fileinfo")}
-                >
-                  <IconFileDescription />
-                  <span>File Info</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* ITEM 2 */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Layer Analysis"
-                  className="pl-4!"
-                  onClick={() => setTab("analysis")}
-                >
-                  <IconChartBar />
-                  <span>Layer Analysis</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* ITEM 2 */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Analyse"
-                  className="pl-4!"
-                  onClick={() => setTab("layer")}
-                >
-                  <IconListDetails />
-                  <span>Analyse</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* ITEM 2 */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Analyse"
-                  className="pl-4!"
-                  onClick={() => setTab("visualization")}
-                >
-                  <IconDashboard />
-                  <span>Visualize</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {sidebarMenu.map((item) => (
+                <SidebarMenuItem key={item.tabKey}>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    className="pl-4!"
+                    onClick={() => setTab(item.tabKey)}
+                  >
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

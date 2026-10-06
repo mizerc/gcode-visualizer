@@ -73,7 +73,7 @@ export function TabInputPage() {
     try {
       const [response] = await Promise.all([
         fetch("/gcode-visualizer/rabbit.gcode"),
-        new Promise((resolve) => window.setTimeout(resolve, 2000)),
+        // new Promise((resolve) => window.setTimeout(resolve, 2000)),
       ]);
       if (!response.ok) {
         throw new Error("Failed to fetch the example G-code file.");

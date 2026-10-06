@@ -57,18 +57,20 @@ export class ParsedGcode {
     let currentLayer: Layer = { z: currentZ, commands: [] };
 
     for (const line of lines) {
+      // Skip empty lines
       if (line.length === 0) {
         continue;
       }
 
-      //   console.log("LINE:", line);
       const cmd: Command = {
         line,
       };
 
+      // Split line into parts for parsing
       const lineParts = line.split(" ");
       let partIndex = 0;
       for (const part of lineParts) {
+        // Skip comments
         if (part.charAt(0) === ";") {
           if (partIndex === 0) {
             // whole line comment
@@ -83,7 +85,8 @@ export class ParsedGcode {
         }
         partIndex++;
 
-        // part: ; M402 G1 X10.3 Y10 Z10 E10 F10
+        // COMMAND M402
+        // M402 G1 X10.3 Y10 Z10 E10 F10
         const param = part.charAt(0);
         const value = parseFloat(part.replace(param, ""));
 
@@ -111,6 +114,7 @@ export class ParsedGcode {
         }
       }
 
+      // COMMAND: G0 OR G1
       if (
         cmd.z !== undefined &&
         cmd.z !== currentZ &&
@@ -162,8 +166,28 @@ export class ParsedGcode {
     }
   }
 
+  getFileName(): string {
+    return "Unknown file";
+  }
+
+  getPrintTime(): string {
+    return "12h 38min";
+  }
+
+  getTotalMaterialUsedStr(): string {
+    // "12.8 g"
+    return "12.8 g";
+  }
+
   getLayersCount(): number {
     return this.layers.length;
+  }
+  getLayersCountStr(): string {
+    return this.getLayersCount().toString() || "Unknown";
+  }
+
+  getNozzleSize(): string {
+    return "0.4 mm";
   }
 
   getCommandsCountForLayer(layer: number): number {
@@ -187,7 +211,7 @@ export class ParsedGcode {
 
   getAllDefinedZCommands(): Command[] {
     return this.layers.flatMap((layer) =>
-      layer.commands.filter((command) => command.z !== undefined)
+      layer.commands.filter((command) => command.z !== undefined),
     );
   }
 

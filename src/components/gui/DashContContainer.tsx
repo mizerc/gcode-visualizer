@@ -6,14 +6,14 @@ const Container = styled.div`
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  padding: 0 16px;
+  padding: 16px;
   gap: 12px;
   box-sizing: border-box;
 `;
 
 const Title = styled.h2`
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.56rem;
   font-weight: 600;
   text-transform: uppercase;
 `;
