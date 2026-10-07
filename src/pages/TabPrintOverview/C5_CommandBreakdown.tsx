@@ -51,7 +51,7 @@ export function C5_CommandBreakdown() {
       colSpan={4}
       TheIcon={IconChartBar}
       title="COMMAND BREAKDOWN"
-      value={`${chartData.length} commands total for layer ${layer}`}
+      value={`${chartData.length} (valids) commands total for layer ${layer}`}
     >
       <div
         className="w-full"

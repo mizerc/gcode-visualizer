@@ -38,6 +38,14 @@ const Row = styled.div`
   padding: 32px;
 `;
 
+const Alert = styled(Row)`
+  padding: 12px 16px;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  background-color: #fef2f2;
+  color: #991b1b;
+`;
+
 export function TabInputPage() {
   const { setGcodeFile } = useApp();
   const [isLoading, setIsLoading] = useState(false);
@@ -102,6 +110,11 @@ export function TabInputPage() {
           disabled={isLoading}
         />
       </Row>
+
+      {/* ALERT */}
+      <Alert>
+        NOTE: Only tested with Utimate Cure 5.x using Marlin flavored g-code.
+      </Alert>
 
       {/* ERRROR */}
       {errorMessage && <ErrorMessage role="alert">{errorMessage}</ErrorMessage>}
