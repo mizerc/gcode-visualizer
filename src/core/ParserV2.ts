@@ -607,6 +607,11 @@ export class ParserV2 implements IParser {
     return `${mm} mm`;
   }
 
+  // Returns an array of the material used for each layer in grams
+  getLayerMaterialUsedGArray(): number[] {
+    return this.layers.map((layer) => layer?.stats?.weight_g ?? 0);
+  }
+
   // Returns the total number of commands for a given layer
   getCommandsCountForLayer(layer: number): number {
     return this.layers[layer]?.commands.length || 0;
@@ -678,6 +683,7 @@ export class ParserV2 implements IParser {
     return this.totals.weight_g;
   }
 
+  // Returns the material used in grams for the specified layer.
   getLayerMaterialUsedG(layer: number): number {
     return this.layers[layer]?.stats.weight_g ?? 0;
   }
@@ -692,6 +698,14 @@ export class ParserV2 implements IParser {
   getTemperatureAtLayerEnd(layer: number): PrinterSnapshot | null {
     const l = this.layers[layer];
     return l ? { ...l.endState } : null;
+  }
+
+  /**
+   * Returns an array of height changes for each layer.
+   * Example: [0.2, 0.3, 0.25] for a print with three layers.
+   */
+  getAllHeightChangesLayerArray(): number[] {
+    
   }
 
   /** M104/M109/M140/M190 issued inside this layer. */

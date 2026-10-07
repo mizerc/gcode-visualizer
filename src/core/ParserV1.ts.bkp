@@ -175,6 +175,10 @@ export class ParserV1 implements IParser {
     return this.getLayersCount().toString() || "Unknown";
   }
 
+  getLayerMaterialUsedGArray(): number[] {
+    throw new Error("Method not implemented.");
+  }
+
   getNozzleSizeStr(): string {
     throw new Error("Method not implemented.");
   }

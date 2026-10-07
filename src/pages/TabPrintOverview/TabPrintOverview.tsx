@@ -18,6 +18,7 @@ import DashContContainer from "@/components/gui/DashContContainer";
 import { CardInfo1 } from "./CardInfo1";
 import { GridCardBb } from "@/components/grid/GridCardBb";
 import { IconWeight } from "@tabler/icons-react";
+import { CardInfo3 } from "./CardInfo3";
 
 export function TabPrintOverview() {
   // CHART DATA
@@ -43,19 +44,7 @@ export function TabPrintOverview() {
 
         {/* <CardInfo2 /> */}
 
-        <GridCardBb
-          title="MATERIAL USAGE"
-          value="4.3 m / 20 g"
-          TheIcon={IconWeight}
-        >
-          <div className="h-2 overflow-hidden rounded-full bg-muted">
-            <div className="h-full w-[64%] rounded-full bg-primary" />
-          </div>
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>Approx. 4.3 m</span>
-            <span>of 20 g spool</span>
-          </div>
-        </GridCardBb>
+        <CardInfo3 />
 
         <GridCard $colSpan={2}>
           <CardHeader>

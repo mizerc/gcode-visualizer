@@ -12,6 +12,7 @@ import { type Icon } from "@tabler/icons-react";
 }
 
 interface GridCardBbProps {
+  colSpan?: 1 | 2 | 3 | 4;
   title: string;
   TheIcon?: Icon;
   value: string;
@@ -19,13 +20,14 @@ interface GridCardBbProps {
 }
 
 export function GridCardBb({
+  colSpan = 2,
   title,
   TheIcon,
   value,
   children,
 }: GridCardBbProps) {
   return (
-    <GridCard $colSpan={2}>
+    <GridCard $colSpan={colSpan}>
       <CardHeader>
         <CardDescription className="flex items-center gap-2">
           {/* <Thermometer className="size-4" aria-hidden="true" /> */}
