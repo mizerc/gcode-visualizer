@@ -7,6 +7,7 @@ import FieldTable, { type FieldRow } from "@/components/gui/FieldTable";
 import { C5_CommandBreakdown } from "./FileOverviewPage.tsx/C5_CommandBreakdown";
 import { C6_ExtrusionPerCommand } from "./FileOverviewPage.tsx/C6_ExtrusionPerCommand";
 import { C7_ExtrusionPerDistance } from "./FileOverviewPage.tsx/C7_ExtrusionPerDistance";
+import { C8_TempStartEndPerLayer } from "./FileOverviewPage.tsx/C8_TempStartEndPerLayer";
 
 export function PerLayerAnalysisPage() {
   const { parsedInstance, layer } = useApp();
@@ -34,6 +35,7 @@ export function PerLayerAnalysisPage() {
         <C5_CommandBreakdown />
         <C6_ExtrusionPerCommand />
         <C7_ExtrusionPerDistance />
+        <C8_TempStartEndPerLayer />
       </GridContainer>
     </DashContContainer>
   );

@@ -18,6 +18,7 @@ import DashContContainer from "@/components/gui/DashContContainer";
 import { CardInfo1 } from "./CardInfo1";
 import { C3_MaterialUsedPerLayer } from "./C3_MaterialUsedPerLayer";
 import { C4_zChangePerLayer } from "./C4_zChangePerLayer";
+import { C8_TempStartEndPerLayer } from "./C8_TempStartEndPerLayer";
 
 export function TabPrintOverview() {
   // CHART DATA
@@ -46,6 +47,8 @@ export function TabPrintOverview() {
         <C3_MaterialUsedPerLayer />
 
         <C4_zChangePerLayer />
+
+        <C8_TempStartEndPerLayer />
 
         <GridCard $colSpan={2}>
           <CardHeader>

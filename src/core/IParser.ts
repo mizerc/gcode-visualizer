@@ -36,6 +36,11 @@ export interface IParser {
   // === TEMPERATURE STATS ===
   getTemperatureAtLayerStart(layer: number): PrinterSnapshot | null;
   getTemperatureAtLayerEnd(layer: number): PrinterSnapshot | null;
+  // Start/end snapshot for every layer
+  getTemperatureStartEndPerLayerArray(): {
+    start: PrinterSnapshot;
+    end: PrinterSnapshot;
+  }[];
 
   // === TIME STATS ===
 

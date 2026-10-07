@@ -717,6 +717,17 @@ export class ParserV2 implements IParser {
     return l ? { ...l.endState } : null;
   }
 
+  /** Start/end printer snapshot for every layer, in layer order. */
+  getTemperatureStartEndPerLayerArray(): {
+    start: PrinterSnapshot;
+    end: PrinterSnapshot;
+  }[] {
+    return this.layers.map((l) => ({
+      start: { ...l.startState },
+      end: { ...l.endState },
+    }));
+  }
+
   /**
    * Returns an array of height changes for each layer.
    * Example: [0.2, 0.3, 0.25] for a print with three layers.
