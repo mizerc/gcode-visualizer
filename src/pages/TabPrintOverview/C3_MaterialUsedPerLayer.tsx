@@ -9,8 +9,9 @@ import {
 } from "recharts";
 import { GridCardBb } from "@/components/grid/GridCardBb";
 import { useApp } from "@/context/AppContext";
+import { IconWeight } from "@tabler/icons-react";
 
-export function CardInfo3() {
+export function C3_MaterialUsedPerLayer() {
   const { parsedInstance } = useApp(); // Assuming you have a context providing the parser instance
 
   const layerMaterialUsedGArray =
@@ -27,40 +28,40 @@ export function CardInfo3() {
 
   return (
     <GridCardBb
-      colSpan={2}
+      colSpan={4}
+      TheIcon={IconWeight}
       title="MATERIAL USED PER LAYER"
       value={`${materialUsedPerLayerChartData.length} layer samples (${sum.toFixed(2)} g total)`}
     >
       <div
         className="h-48 w-full"
         role="img"
-        aria-label="Horizontal bar chart of material used per layer in grams"
+        aria-label="Bar chart of material used per layer in grams"
       >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={materialUsedPerLayerChartData}
-            layout="vertical"
+            layout="horizontal"
             margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
             barCategoryGap="35%"
           >
             <CartesianGrid
-              horizontal={false}
+              vertical={false}
               stroke="var(--border)"
               strokeDasharray="3 3"
             />
             <XAxis
-              type="number"
-              domain={[0, "dataMax"]}
-              tickCount={4}
-              tickFormatter={(value: number) => `${Number(value.toFixed(2))} g`}
+              type="category"
+              dataKey="layer"
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              type="category"
-              dataKey="layer"
-              width={52}
+              type="number"
+              domain={[0, (dataMax: number) => dataMax * 1.1]}
+              tickCount={4}
+              tickFormatter={(value: number) => `${Number(value.toFixed(2))} g`}
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               axisLine={false}
               tickLine={false}
@@ -71,7 +72,7 @@ export function CardInfo3() {
                 "Used",
               ]}
             />
-            <Bar dataKey="height" fill="var(--primary)" radius={[0, 4, 4, 0]} />
+            <Bar dataKey="height" fill="var(--primary)" radius={4} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -16,9 +16,8 @@ import { GridContainer } from "@/components/grid/GridContainer";
 import { GridCard } from "@/components/grid/GridCard";
 import DashContContainer from "@/components/gui/DashContContainer";
 import { CardInfo1 } from "./CardInfo1";
-import { GridCardBb } from "@/components/grid/GridCardBb";
-import { IconWeight } from "@tabler/icons-react";
-import { CardInfo3 } from "./CardInfo3";
+import { C3_MaterialUsedPerLayer } from "./C3_MaterialUsedPerLayer";
+import { C4_zChangePerLayer } from "./C4_zChangePerLayer";
 
 export function TabPrintOverview() {
   // CHART DATA
@@ -44,7 +43,9 @@ export function TabPrintOverview() {
 
         {/* <CardInfo2 /> */}
 
-        <CardInfo3 />
+        <C3_MaterialUsedPerLayer />
+
+        <C4_zChangePerLayer />
 
         <GridCard $colSpan={2}>
           <CardHeader>

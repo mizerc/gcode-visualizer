@@ -705,7 +705,11 @@ export class ParserV2 implements IParser {
    * Example: [0.2, 0.3, 0.25] for a print with three layers.
    */
   getAllHeightChangesLayerArray(): number[] {
-    
+    return this.layers.map((layer, i) => {
+      const prevZ = i === 0 ? 0 : this.layers[i - 1].z;
+      // Round to avoid floating-point noise like 0.30000000000000004
+      return Math.round((layer.z - prevZ) * 1e4) / 1e4;
+    });
   }
 
   /** M104/M109/M140/M190 issued inside this layer. */
