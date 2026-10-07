@@ -1,3 +1,4 @@
+import type { IParser } from "./IParser";
 import { Vec2 } from "./Vec2";
 
 interface Layer {
@@ -27,7 +28,7 @@ export interface Command {
   flow_mm3_s?: number;
 }
 
-export class ParserV1 {
+export class ParserV1 implements IParser {
   layers: Layer[] = [];
 
   constructor(content: string) {
@@ -151,9 +152,11 @@ export class ParserV1 {
       this.layers.push(currentLayer);
     }
   }
-
-  getFileName(): string {
-    return "Unknown file";
+  getTotalMaterialUsedG(): number {
+    throw new Error("Method not implemented.");
+  }
+  getLayerMaterialUsedG(_: number): number {
+    throw new Error("Method not implemented.");
   }
 
   getPrintTime(): string {
@@ -172,8 +175,8 @@ export class ParserV1 {
     return this.getLayersCount().toString() || "Unknown";
   }
 
-  getNozzleSize(): string {
-    return "0.4 mm";
+  getNozzleSizeStr(): string {
+    throw new Error("Method not implemented.");
   }
 
   getCommandsCountForLayer(layer: number): number {

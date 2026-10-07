@@ -4,7 +4,6 @@ import {
   ShieldCheck,
   Thermometer,
   Waves,
-  Weight,
 } from "lucide-react";
 
 import {
@@ -17,19 +16,23 @@ import { GridContainer } from "@/components/grid/GridContainer";
 import { GridCard } from "@/components/grid/GridCard";
 import DashContContainer from "@/components/gui/DashContContainer";
 import { CardInfo1 } from "./CardInfo1";
-import { CardInfo2 } from "./CardInfo2";
-
-const movementBreakdown = [
-  { label: "Print moves", value: 68, color: "bg-primary" },
-  { label: "Travel moves", value: 22, color: "bg-sky-500" },
-  { label: "Retractions", value: 10, color: "bg-amber-500" },
-];
-const temperatureReadings = [
-  { label: "Nozzle", value: "210°C", detail: "Target temperature" },
-  { label: "Bed", value: "60°C", detail: "Target temperature" },
-];
+import { GridCardBb } from "@/components/grid/GridCardBb";
+import { IconWeight } from "@tabler/icons-react";
 
 export function TabPrintOverview() {
+  // CHART DATA
+  const movementBreakdown = [
+    { label: "Print moves", value: 68, color: "bg-primary" },
+    { label: "Travel moves", value: 22, color: "bg-sky-500" },
+    { label: "Retractions", value: 10, color: "bg-amber-500" },
+  ];
+
+  // TEMPERATURE READINGS DATA
+  const temperatureReadings = [
+    { label: "Nozzle", value: "210°C", detail: "Target temperature" },
+    { label: "Bed", value: "60°C", detail: "Target temperature" },
+  ];
+
   return (
     <DashContContainer
       title="Command Analysis"
@@ -38,26 +41,21 @@ export function TabPrintOverview() {
       <GridContainer aria-label="G-code file analysis">
         <CardInfo1 />
 
-        <CardInfo2 />
+        {/* <CardInfo2 /> */}
 
-        <GridCard
-          title={
-            <>
-              <Weight className="size-4" aria-hidden="true" />
-              Material usage
-            </>
-          }
+        <GridCardBb
+          title="MATERIAL USAGE"
+          value="4.3 m / 20 g"
+          TheIcon={IconWeight}
         >
-          <CardContent className="space-y-3">
-            <div className="h-2 overflow-hidden rounded-full bg-muted">
-              <div className="h-full w-[64%] rounded-full bg-primary" />
-            </div>
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Approx. 4.3 m</span>
-              <span>of 20 g spool</span>
-            </div>
-          </CardContent>
-        </GridCard>
+          <div className="h-2 overflow-hidden rounded-full bg-muted">
+            <div className="h-full w-[64%] rounded-full bg-primary" />
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>Approx. 4.3 m</span>
+            <span>of 20 g spool</span>
+          </div>
+        </GridCardBb>
 
         <GridCard $colSpan={2}>
           <CardHeader>

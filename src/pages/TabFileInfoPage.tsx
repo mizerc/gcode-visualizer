@@ -35,6 +35,10 @@ export function TabFileInfoPage() {
       label: "Last modified",
       value: new Date(gcodeFile.lastModified).toLocaleString(),
     },
+    {
+      label: "Created",
+      value: new Date(gcodeFile.lastModified).toLocaleString(),
+    },
   ];
 
   return (
@@ -43,11 +47,7 @@ export function TabFileInfoPage() {
       description="Details about the loaded G-code file."
     >
       <GridContainer>
-        <GridCard
-          $colSpan={4}
-          title="General Information"
-          desc="Basic details about the G-code file."
-        >
+        <GridCard $colSpan={4} title="General Information">
           <FieldTable rows={generalRows} />
         </GridCard>
       </GridContainer>

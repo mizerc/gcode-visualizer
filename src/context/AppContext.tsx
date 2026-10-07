@@ -1,3 +1,4 @@
+import type { IParser, IParserConstructor } from "@/core/IParser";
 import {
   createContext,
   useContext,
@@ -7,7 +8,6 @@ import {
   type ReactNode,
   useRef,
 } from "react";
-import { ParserV1 } from "../core/ParserV1";
 
 interface AppContextValue {
   gcodeFile: File | null;
@@ -15,7 +15,7 @@ interface AppContextValue {
   gcodeText: string | null;
   isLoading: boolean;
   isLoaded: boolean;
-  parsedInstance: React.RefObject<ParserV1 | null>;
+  parsedInstance: React.RefObject<IParser | null>;
   hasError: string | null;
   setGcodeFile: (file: File) => Promise<void>;
   clear: () => void;
@@ -34,13 +34,19 @@ interface AppContextValue {
 // Not exported: nobody should use this directly
 const AppContext = createContext<AppContextValue | null>(null);
 
-export function AppProvider({ children }: { children: ReactNode }) {
+export function AppProvider({
+  children,
+  parserClass: ParserClass,
+}: {
+  children: ReactNode;
+  parserClass: IParserConstructor;
+}) {
   // Hold the file instance
   const [gcodeFile, setFile] = useState<File | null>(null);
   // Hold the parsed G-code instance as text
   const [gcodeText, setGcodeText] = useState<string | null>(null);
   // Hold the parsed G-code instance as an object
-  const parsedInstance = useRef<ParserV1 | null>(null);
+  const parsedInstance = useRef<IParser | null>(null);
   // Insternal state
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -85,7 +91,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setHasError(null);
     try {
       const text = await file.text();
-      const parsed = new ParserV1(text);
+      const parsed = new ParserClass(text);
       parsedInstance.current = parsed;
       setFile(file);
       setGcodeText(text);
@@ -153,6 +159,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
 export function useApp() {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error("useApp must be used inside <AppProvider>");
+  if (!ctx) throw new Error("useApp() must be used within <AppProvider>");
   return ctx;
 }

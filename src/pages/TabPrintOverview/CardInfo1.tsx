@@ -11,7 +11,7 @@ import { Metric } from "./Metric";
 import { useApp } from "@/context/AppContext";
 
 export function CardInfo1() {
-  const { parsedInstance, isLoaded } = useApp();
+  const { parsedInstance, isLoaded, gcodeFileName } = useApp();
 
   if (!isLoaded || !parsedInstance?.current) {
     return (
@@ -31,9 +31,7 @@ export function CardInfo1() {
         </CardDescription>
 
         {/* FILENAME */}
-        <CardTitle className="text-xl">
-          {parsedInstance.current.getFileName()}
-        </CardTitle>
+        <CardTitle className="text-xl">{gcodeFileName}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
@@ -54,7 +52,7 @@ export function CardInfo1() {
 
           <Metric
             label="Nozzle"
-            value={parsedInstance.current.getNozzleSize()}
+            value={parsedInstance.current.getNozzleSizeStr()}
           />
         </div>
       </CardContent>
