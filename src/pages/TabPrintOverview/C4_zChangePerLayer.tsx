@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { GridCardBb } from "@/components/grid/GridCardBb";
 import { useApp } from "@/context/AppContext";
-import { IconAbc, IconWalk } from "@tabler/icons-react";
+import { IconWalk } from "@tabler/icons-react";
 
 export function C4_zChangePerLayer() {
   const { parsedInstance } = useApp(); // Assuming you have a context providing the parser instance
@@ -60,7 +60,9 @@ export function C4_zChangePerLayer() {
               type="number"
               domain={["dataMin - 10", "dataMax + 10"]}
               tickCount={5}
-              tickFormatter={(value: number) => `${Number(value.toFixed(2))} mm`}
+              tickFormatter={(value: number) =>
+                `${Number(value.toFixed(2))} mm`
+              }
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               axisLine={false}
               tickLine={false}

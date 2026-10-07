@@ -10,6 +10,12 @@ export interface IParser {
   // Get the nozzle size as a string
   getNozzleSizeStr(): string;
 
+  // === COMMANDS STATS ===
+
+  // Returns a histogram array for the specified layer, showing the count of each G-code command.
+  // Example: [ "G1: 120", "G0: 30", "M104: 5" ]
+  getHistogramArrayFromLayer(layer: number): Array<string>;
+
   // === HEIGHT STATS ===
   getAllHeightChangesLayerArray(): number[];
 

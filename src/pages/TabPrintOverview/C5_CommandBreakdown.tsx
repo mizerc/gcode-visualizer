@@ -1,8 +1,8 @@
 import {
   Bar,
   BarChart,
+  Cell,
   CartesianGrid,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -10,69 +10,92 @@ import {
 } from "recharts";
 import { GridCardBb } from "@/components/grid/GridCardBb";
 import { useApp } from "@/context/AppContext";
-import { IconAbc, IconWalk } from "@tabler/icons-react";
+import { IconChartBar } from "@tabler/icons-react";
+
+// Returns a histogram array for the specified layer, showing the count of each G-code command.
+// Example: [ "G1: 120", "G0: 30", "M104: 5" ]
+const BAR_COLORS = [
+  "#f43f5e",
+  "#f97316",
+  "#eab308",
+  "#22c55e",
+  "#06b6d4",
+  "#6366f1",
+  "#d946ef",
+];
 
 export function C5_CommandBreakdown() {
-  const { parsedInstance } = useApp(); // Assuming you have a context providing the parser instance
+  const { parsedInstance, layer } = useApp(); // Assuming you have a context providing the parser instance
 
-  const zChangesPerLayerArray =
-    parsedInstance?.current?.getAllHeightChangesLayerArray() ?? [];
+  // Returns a histogram array for the specified layer, showing the count of each G-code command.
+  // Example: [ "G1: 120", "G0: 30", "M104: 5" ]
+  // getHistogramArrayFromLayer(layer: number): Array<string>;
 
-  const chartData = zChangesPerLayerArray.map((value, index) => ({
-    layer: `Layer ${index + 1}`,
-    value,
-  }));
+  const histogram =
+    parsedInstance?.current?.getHistogramArrayFromLayer(layer) ?? [];
 
-  const sum = zChangesPerLayerArray.reduce((acc, curr) => acc + curr, 0);
+  // Entries look like "G1: 120"; sorted so the most used command is row 1.
+  const chartData = histogram
+    .map((entry) => {
+      const separator = entry.lastIndexOf(":");
+      return {
+        command: entry.slice(0, separator).trim(),
+        count: Number(entry.slice(separator + 1)),
+      };
+    })
+    .filter((row) => row.command && Number.isFinite(row.count))
+    .sort((a, b) => b.count - a.count);
 
   return (
     <GridCardBb
       colSpan={4}
-      TheIcon={IconWalk}
-      title="Z CHANGE PER LAYER"
-      value={`${chartData.length} layer samples (${sum.toFixed(2)} mm total)`}
+      TheIcon={IconChartBar}
+      title="COMMAND BREAKDOWN"
+      value={`${chartData.length} commands total for layer ${layer}`}
     >
       <div
-        className="h-48 w-full"
+        className="w-full"
+        style={{ height: Math.max(192, chartData.length * 28 + 16) }}
         role="img"
-        aria-label="Bar chart of Z change per layer in millimeters, with 10 millimeters of padding on each side"
+        aria-label="Bar chart of G-code command counts for the current layer, most used first"
       >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
-            layout="horizontal"
-            margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
-            barCategoryGap="35%"
+            layout="vertical"
+            margin={{ top: 4, right: 16, bottom: 0, left: 8 }}
+            barCategoryGap="25%"
           >
             <CartesianGrid
-              vertical={false}
+              horizontal={false}
               stroke="var(--border)"
               strokeDasharray="3 3"
             />
             <XAxis
-              type="category"
-              dataKey="layer"
+              type="number"
+              allowDecimals={false}
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              type="number"
-              domain={["dataMin - 10", "dataMax + 10"]}
-              tickCount={5}
-              tickFormatter={(value: number) => `${Number(value.toFixed(2))} mm`}
+              type="category"
+              dataKey="command"
+              width={80}
+              interval={0}
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               axisLine={false}
               tickLine={false}
             />
-            <ReferenceLine y={0} stroke="var(--muted-foreground)" />
-            <Tooltip
-              formatter={(value) => [
-                `${typeof value === "number" ? value.toFixed(2) : value} mm`,
-                "Z change",
-              ]}
-            />
-            <Bar dataKey="value" fill="var(--primary)" radius={4} />
+            <Tooltip formatter={(value) => [value, "Count"]} />
+            <Bar dataKey="count" radius={4}>
+              {chartData.map((row, index) => (
+                <Cell
+                  key={row.command}
+                  fill={BAR_COLORS[index % BAR_COLORS.length]}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
