@@ -50,7 +50,8 @@ export function TabPrintOverview() {
 
         <C8_TempStartEndPerLayer />
 
-        <GridCard $colSpan={2}>
+        {/* Full file command breakdown */}
+        {/* <GridCard $colSpan={2}>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Activity className="size-4" aria-hidden="true" />
@@ -76,9 +77,10 @@ export function TabPrintOverview() {
               </div>
             ))}
           </CardContent>
-        </GridCard>
+        </GridCard> */}
 
-        <GridCard>
+        {/* PLA profile */}
+        {/* <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Thermometer className="size-4" aria-hidden="true" />
@@ -104,9 +106,10 @@ export function TabPrintOverview() {
               </div>
             ))}
           </CardContent>
-        </GridCard>
+        </GridCard> */}
 
-        <GridCard>
+        {/* Total printing time, extruding time and travel/wait without extruder time */}
+        {/* <GridCard>
           <CardHeader>
             <CardDescription className="flex items-center gap-2">
               <Clock3 className="size-4" aria-hidden="true" />
@@ -124,40 +127,11 @@ export function TabPrintOverview() {
               <span>24m</span>
             </div>
           </CardContent>
-        </GridCard>
+        </GridCard> */}
 
-        <GridCard $colSpan={2}>
-          <CardHeader>
-            <CardDescription className="flex items-center gap-2">
-              <ShieldCheck className="size-4" aria-hidden="true" />
-              File checks
-            </CardDescription>
-            <CardTitle>Looks ready to print</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-3 text-sm sm:grid-cols-3">
-            <div className="flex items-center gap-2">
-              <ShieldCheck
-                className="size-4 text-emerald-600"
-                aria-hidden="true"
-              />
-              Start sequence found
-            </div>
-            <div className="flex items-center gap-2">
-              <ShieldCheck
-                className="size-4 text-emerald-600"
-                aria-hidden="true"
-              />
-              End sequence found
-            </div>
-            <div className="flex items-center gap-2">
-              <Waves
-                className="size-4 text-muted-foreground"
-                aria-hidden="true"
-              />
-              No unusual travel spikes
-            </div>
-          </CardContent>
-        </GridCard>
+        {/* 
+       TODO: Find travel spikes, and analyze unusual movements in the print job.
+       */}
       </GridContainer>
     </DashContContainer>
   );

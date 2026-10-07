@@ -3,7 +3,7 @@ import { PerCommandAnalysisPage } from "@/pages/PerCommandAnalysisPage";
 import { TabFileInfoPage } from "@/pages/FileInfoPage";
 import { TabInputPage } from "@/pages/FileInputPage";
 import { LayerContentPrettyPage } from "@/pages/LayerContentPrettyPage";
-import { TabPrintOverview } from "@/pages/FileOverviewPage.tsx/TabPrintOverview";
+import { TabPrintOverview } from "@/pages/FileOverviewPage/FileOverviewPage";
 import {
   createContext,
   useContext,
