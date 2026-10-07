@@ -1,50 +1,97 @@
+import styled from "styled-components";
+import { PanelLeftIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 import { useApp } from "@/context/AppContext";
 import { Button } from "../guiv2/Button";
-import { useHashNav } from "@/context/HashNavContext";
+
+const Header = styled.header`
+  display: flex;
+  height: 72px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+`;
+
+const Content = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 1rem;
+
+  @media (min-width: 1024px) {
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+  }
+`;
+
+const SidebarToggle = styled.button`
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-left: -0.25rem;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: inherit;
+
+  &:hover {
+    background: var(--muted);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+`;
+
+const VerticalSeparator = styled(Separator)`
+  width: 1px;
+  height: 1rem;
+  flex-shrink: 0;
+  margin: 0 0.5rem;
+  background-color: var(--border);
+`;
+
+const StatusActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+`;
+
+const LoadedStatus = styled.p<{ $isLoaded: boolean }>`
+  padding: 0.25rem 0.75rem;
+  color: ${({ $isLoaded }) => ($isLoaded ? "#16a34a" : "#dc2626")};
+`;
 
 export function Topbar() {
-  const { isLoaded, clear } = useApp();
-  const { currTab } = useHashNav();
+  const { isLoaded, clear, gcodeFileName } = useApp();
+  const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        {/* SIDEBAR TRIGGER */}
-        <SidebarTrigger className="-ml-1" />
+    <Header>
+      <Content>
+        <SidebarToggle
+          type="button"
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
+        >
+          <PanelLeftIcon aria-hidden="true" />
+        </SidebarToggle>
 
-        {/* SEPARATOR */}
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
+        <VerticalSeparator orientation="vertical" />
 
-        {/* CURRENT TAB DISPLAY */}
-        <div className="flex flex-row gap-1">
-          {/* create a border around tabname */}
-          <p>Current Tab:</p>
-          <span className="border border-gray-300 rounded text-sm p-2">
-            {currTab}
-          </span>
-        </div>
-
-        {/* SEPARATOR */}
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
-
-        {/* SHOW LOADED STATUS */}
-        <div className="ml-auto flex items-center gap-2">
-          <p
-            className={`px-3 py-1 ${
-              isLoaded ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            Loaded Status: {isLoaded ? "Loaded" : "Not Loaded"}
-          </p>
-          {/* IF LOADED, RENDER UNLOAD BUTTON */}
+        <StatusActions>
+          <LoadedStatus $isLoaded={isLoaded}>
+            Current G-code File: {gcodeFileName}
+          </LoadedStatus>
           {isLoaded && (
             <Button
               onClick={() => {
@@ -54,8 +101,8 @@ export function Topbar() {
               Unload
             </Button>
           )}
-        </div>
-      </div>
-    </header>
+        </StatusActions>
+      </Content>
+    </Header>
   );
 }

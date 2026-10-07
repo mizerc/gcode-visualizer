@@ -11,6 +11,7 @@ import { ParserV1 } from "../core/ParserV1";
 
 interface AppContextValue {
   gcodeFile: File | null;
+  gcodeFileName: string;
   gcodeText: string | null;
   isLoading: boolean;
   isLoaded: boolean;
@@ -47,6 +48,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Layer and command state
   const [layer, setLayer] = useState(0);
   const [command, setCommand] = useState(0);
+
+  // gcodeFileName
+  const gcodeFileName = gcodeFile?.name || "Not Loaded";
 
   const restCommand = useCallback(() => {
     setCommand(0);
@@ -121,6 +125,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       nextLayer,
       prevLayer,
       resetLayer,
+      gcodeFileName,
     }),
     [
       gcodeFile,
@@ -139,6 +144,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       nextLayer,
       prevLayer,
       resetLayer,
+      gcodeFileName,
     ],
   );
 
