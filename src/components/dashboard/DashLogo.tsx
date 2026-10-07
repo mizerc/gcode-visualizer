@@ -20,7 +20,7 @@ const Text = styled.span`
 
 export function SidebarLogo() {
   return (
-    <Container href="/">
+    <Container href={import.meta.env.BASE_URL}>
       <IconInnerShadowTop size={32} />
       <Text>GCODE VISUALIZER</Text>
     </Container>
