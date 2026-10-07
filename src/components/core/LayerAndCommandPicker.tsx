@@ -66,6 +66,12 @@ export function LayerAndCommandPicker({
 
   return (
     <Panel aria-label="Playback navigation">
+      <p>
+        {hiddeCommand
+          ? "Select a layer to analyze"
+          : "Select a layer and command to analyze"}
+      </p>
+
       {/* LAYER NAVIGATION */}
       <Stepper
         label="Layer"

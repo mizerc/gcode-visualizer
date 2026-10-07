@@ -48,10 +48,10 @@ export function C5_CommandBreakdown() {
 
   return (
     <GridCardBb
-      colSpan={4}
+      colSpan={2}
       TheIcon={IconChartBar}
       title="COMMAND BREAKDOWN"
-      value={`${chartData.length} (valids) commands total for layer ${layer}`}
+      value={`${chartData.length} unique commands for layer ${layer} (total ${parsedInstance.current?.getCommandsCountForLayer(layer) || 0})`}
     >
       <div
         className="w-full"

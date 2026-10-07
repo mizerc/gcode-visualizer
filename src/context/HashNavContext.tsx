@@ -1,9 +1,9 @@
-import { TabAboutPage } from "@/pages/TabAboutPage";
+import { TabAboutPage } from "@/pages/AboutPage";
 import { PerCommandAnalysisPage } from "@/pages/PerCommandAnalysisPage";
-import { TabFileInfoPage } from "@/pages/TabFileInfoPage";
+import { TabFileInfoPage } from "@/pages/FileInfoPage";
 import { TabInputPage } from "@/pages/FileInputPage";
 import { LayerContentPrettyPage } from "@/pages/LayerContentPrettyPage";
-import { TabPrintOverview } from "@/pages/TabPrintOverview/TabPrintOverview";
+import { TabPrintOverview } from "@/pages/FileOverviewPage.tsx/TabPrintOverview";
 import {
   createContext,
   useContext,
@@ -22,7 +22,7 @@ import {
   IconInnerShadowTop,
   IconUsers,
 } from "@tabler/icons-react";
-import { LayerAnalysisPage } from "@/pages/LayerAnalysisPage";
+import { PerLayerAnalysisPage } from "@/pages/PerLayerAnalysisPage";
 import { FileViewPrettyPage } from "@/pages/FileViewPrettyPage";
 import { FileViewRawPage } from "@/pages/FileViewRawPage";
 import { LayerRendererPage } from "@/pages/LayerRendererPage";
@@ -60,7 +60,7 @@ export const TabKeys = {
   LayerAnalysis: {
     key: "layeranalysis",
     label: "Per-Layer Analysis",
-    comp: LayerAnalysisPage,
+    comp: PerLayerAnalysisPage,
     icon: IconInnerShadowTop,
   },
   CommandAnalysisOld: {

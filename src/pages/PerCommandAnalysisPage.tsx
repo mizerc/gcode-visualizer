@@ -1,8 +1,4 @@
-import { GridCell, TabGrid } from "../components/gridold/TabGrid";
-import Grid from "../components/gridold/Grid";
 import { useApp } from "../context/AppContext";
-import Label from "@/components/gui/Label";
-import VList from "@/components/guiv2/VList";
 import DashContContainer from "@/components/gui/DashContContainer";
 import { LayerAndCommandPicker } from "@/components/core/LayerAndCommandPicker";
 import { GridContainer } from "@/components/grid/GridContainer";
@@ -14,291 +10,92 @@ export function PerCommandAnalysisPage() {
 
   const currentCommand = parsedInstance.current?.getCommand(layer, command);
 
-  const layerRows: FieldRow[] = [
-    {
-      label: "Total Commands",
-      value: parsedInstance.current?.getCommandsCountForLayer(layer) || 0,
-    },
-  ];
-
-  const commandRows: FieldRow[] = [
-    // Current Command
-    {
-      label: "G-Code Line",
-      value: currentCommand?.line || "N/A",
-    },
-    {
-      label: "Command Type",
-      value: currentCommand?.code || "N/A",
-    },
-
-    // Position Coordinates
-    {
-      label: "X Position",
-      value: currentCommand?.x?.toFixed(3) || "N/A",
-      unit: "mm",
-    },
-    {
-      label: "Y Position",
-      value: currentCommand?.y?.toFixed(3) || "N/A",
-      unit: "mm",
-    },
-    {
-      label: "Z Position",
-      value: currentCommand?.z?.toFixed(3) || "N/A",
-      unit: "mm",
-    },
-    {
-      label: "E Position",
-      value: currentCommand?.e?.toFixed(3) || "N/A",
-      unit: "mm",
-    },
-
-    // Movement Metrics
-    {
-      label: "Travel Distance",
-      value: currentCommand?.distance?.toFixed(3) || "0.000",
-      unit: "mm",
-    },
-    {
-      label: "Last Seen Z",
-      value: currentCommand?.last_seen_z?.toFixed(3) || "N/A",
-      unit: "mm",
-    },
-
-    // Extrusion Data
-    {
-      label: "Extruded Volume",
-      value: currentCommand?.extruded_volume_mm3?.toFixed(3) || "0.000",
-      unit: "mm³",
-    },
-    {
-      label: "Volume per Distance",
-      value: currentCommand?.volume_per_distance?.toFixed(3) || "0.000",
-      unit: "mm³/mm",
-    },
-  ];
-
-  const commandSpeedFlowRows: FieldRow[] = [
-    // Speed & Flow
-    {
-      label: "Velocity",
-      value: currentCommand?.velocity_mm_s?.toFixed(3) || "0.000",
-      unit: "mm/s",
-    },
-    {
-      label: "Feed Rate",
-      value: currentCommand?.last_seen_f_mm_s?.toFixed(3) || "N/A",
-      unit: "mm/s",
-    },
-    {
-      label: "Flow Rate",
-      value: currentCommand?.flow_mm3_s?.toFixed(3) || "0.000",
-      unit: "mm³/s",
-    },
-  ];
-
   return (
     <DashContContainer
-      title="Per-Layer Analysis"
-      description="Isolate the content of each layer"
+      title="Per-Command Analysis"
+      description="Visualize what each command is doing"
     >
       <LayerAndCommandPicker />
 
       <GridContainer>
         <GridCard $colSpan={4} title="Per-Layer Information">
-          <FieldTable rows={layerRows} />
+          <FieldTable
+            rows={[
+              {
+                label: "Total Commands",
+                value:
+                  parsedInstance.current?.getCommandsCountForLayer(layer) || 0,
+              },
+            ]}
+          />
         </GridCard>
 
-        <GridCard $colSpan={2} title="Per-Command Travel">
-          <FieldTable rows={commandRows} />
+        <GridCard $colSpan={2} title="Parsed Command">
+          <FieldTable
+            rows={[
+              {
+                label: "Raw Line",
+                value: currentCommand?.line || "N/A",
+              },
+              {
+                label: "Type",
+                value: currentCommand?.code || "N/A",
+              },
+
+              // Position Coordinates
+              {
+                label: "Target X Position",
+                value: currentCommand?.x?.toFixed(3) || "N/A",
+                unit: "mm",
+              },
+              {
+                label: "Target Y Position",
+                value: currentCommand?.y?.toFixed(3) || "N/A",
+                unit: "mm",
+              },
+              {
+                label: "Target Z Position",
+                value: currentCommand?.z?.toFixed(3) || "N/A",
+                unit: "mm",
+              },
+              {
+                label: "Target E Position (mm)",
+                value: currentCommand?.e?.toFixed(3) || "N/A",
+                unit: "mm",
+              },
+              {
+                label: "Feed rate (mm/min)",
+                value: currentCommand?.feedrate_mm_min?.toFixed(3) || "N/A",
+                unit: "mm",
+              },
+            ]}
+          />
         </GridCard>
 
-        <GridCard $colSpan={2} title="Per-Command Speed & Flow">
-          <FieldTable rows={commandSpeedFlowRows} />
+        <GridCard $colSpan={2} title="Deltas">
+          <FieldTable
+            rows={[
+              {
+                label: "Extruded Amout (mm3)",
+                value: currentCommand?.extruded_volume_mm3?.toFixed(3) || "N/A",
+              },
+              {
+                label: "Distance Traveled (mm)",
+                value: currentCommand?.distance?.toFixed(3) || "N/A",
+              },
+              // volume_per_distance
+              {
+                label: "Volume per Distance (mm3/mm)",
+                value: currentCommand?.volume_per_distance?.toFixed(3) || "N/A",
+              },
+              {
+                label: "Weight (g)",
+                value: currentCommand?.weight_g?.toFixed(3) || "N/A",
+              },
+            ]}
+          />
         </GridCard>
       </GridContainer>
-    </DashContContainer>
-  );
-
-  return (
-    <DashContContainer title="Per-Command Analysis">
-      <LayerAndCommandPicker />
-
-      <TabGrid>
-        {/* <GridCell colStart={1} colEnd={5} rowStart={1}>
-          <NavigationControl
-            layerCount={parsedInstance.current?.getLayersCount() || 0}
-            currentLayer={layer}
-            commandsCount={
-              parsedInstance.current?.getCommandsCountForLayer(layer) || 0
-            }
-            currentCommand={command}
-            onPrevLayer={prevLayer}
-            onNextLayer={nextLayer}
-            onResetLayer={resetLayer}
-            onPrevCommand={prevCommand}
-            onNextCommand={nextCommand}
-            onResetCommand={restCommand}
-          />
-        </GridCell> */}
-
-        {/* Current Command - Left 2 columns, Row 2 */}
-        <GridCell colStart={1} colEnd={3} rowStart={2}>
-          <VList>
-            <h3>Current Command</h3>
-            <Label
-              title="G-Code Line"
-              value={
-                parsedInstance.current?.getCommand(layer, command)?.line ||
-                "N/A"
-              }
-            />
-            <Label
-              title="Command Type"
-              value={
-                parsedInstance.current?.getCommand(layer, command)?.code ||
-                "N/A"
-              }
-            />
-          </VList>
-        </GridCell>
-
-        {/* Position Coordinates - Right 2 columns, Row 2 */}
-        <GridCell colStart={3} colEnd={5} rowStart={2}>
-          <VList>
-            <h3>Position Coordinates</h3>
-            <Grid maxCol={2}>
-              <Label
-                title="X Position"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.x?.toFixed(3) || "N/A"
-                }
-                unit="mm"
-              />
-              <Label
-                title="Y Position"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.y?.toFixed(3) || "N/A"
-                }
-                unit="mm"
-              />
-              <Label
-                title="Z Position"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.z?.toFixed(3) || "N/A"
-                }
-                unit="mm"
-              />
-              <Label
-                title="E Position"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.e?.toFixed(3) || "N/A"
-                }
-                unit="mm"
-              />
-            </Grid>
-          </VList>
-        </GridCell>
-
-        {/* Movement Metrics - Left 2 columns, Row 3 */}
-        <GridCell colStart={1} colEnd={3} rowStart={3}>
-          <VList>
-            <h3>Movement Metrics</h3>
-            <Grid maxCol={2}>
-              <Label
-                title="Travel Distance"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.distance?.toFixed(3) || "0.000"
-                }
-                unit="mm"
-              />
-              <Label
-                title="Last Seen Z"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.last_seen_z?.toFixed(3) || "N/A"
-                }
-                unit="mm"
-              />
-            </Grid>
-          </VList>
-        </GridCell>
-
-        {/* Extrusion Data - Right 2 columns, Row 3 */}
-        <GridCell colStart={3} colEnd={5} rowStart={3}>
-          <VList>
-            <h3>Extrusion Data</h3>
-            <Grid maxCol={2}>
-              <Label
-                title="Extruded Volume"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.extruded_volume_mm3?.toFixed(3) || "0.000"
-                }
-                unit="mm³"
-              />
-              <Label
-                title="Volume per Distance"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.volume_per_distance?.toFixed(3) || "0.000"
-                }
-                unit="mm³/mm"
-              />
-            </Grid>
-          </VList>
-        </GridCell>
-
-        {/* Speed & Flow - Full width Row 4 */}
-        <GridCell colStart={1} colEnd={5} rowStart={4}>
-          <VList>
-            <h3>Speed & Flow</h3>
-            <Grid maxCol={3}>
-              <Label
-                title="Velocity"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.velocity_mm_s?.toFixed(3) || "0.000"
-                }
-                unit="mm/s"
-              />
-              <Label
-                title="Feed Rate"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.last_seen_f_mm_s?.toFixed(3) || "N/A"
-                }
-                unit="mm/s"
-              />
-              <Label
-                title="Flow Rate"
-                value={
-                  parsedInstance.current
-                    ?.getCommand(layer, command)
-                    ?.flow_mm3_s?.toFixed(3) || "0.000"
-                }
-                unit="mm³/s"
-              />
-            </Grid>
-          </VList>
-        </GridCell>
-      </TabGrid>
     </DashContContainer>
   );
 }

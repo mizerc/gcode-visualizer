@@ -10,7 +10,7 @@ export function LayerContentPrettyPage() {
   const layerContent = useMemo(() => {
     return (parsedInstance.current?.getCommandsForLayer(layer) || [])
       .map((command) => {
-        return `line: ${command.line}\nCMD: ${command.code}, X: ${command.x}, Y: ${command.y}, Z: ${command.z}, E: ${command.e}, F: ${command.f}\n`;
+        return `line: ${command.line}\nCMD: ${command.code}, X: ${command.x}, Y: ${command.y}, Z: ${command.z}, E: ${command.e}, F: ${command.feedrate_mm_min}\n`;
       })
       .join("\n");
   }, [parsedInstance, layer]);

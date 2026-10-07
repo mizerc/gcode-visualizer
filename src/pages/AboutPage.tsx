@@ -12,7 +12,7 @@ const ParagraphBlock = styled.p`
 
 export function TabAboutPage() {
   return (
-    <DashContContainer title="About">
+    <DashContContainer title="About" disableValidation={true}>
       <ParagraphBlock>
         This is an amateur tool to visualize G-code files for 3D printing.
       </ParagraphBlock>

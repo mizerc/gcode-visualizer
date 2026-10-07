@@ -1,4 +1,4 @@
-import type { PrinterSnapshot } from "./ParserV2";
+import type { Command, PrinterSnapshot } from "./ParserV2";
 
 export interface IParser {
   getLayersCount(): number;
@@ -12,9 +12,23 @@ export interface IParser {
 
   // === COMMANDS STATS ===
 
+  getCommand(layerIndex: number, commandIndex: number): Command | null;
+
+  getValidXYCommandsForLayer(layer: number, limit: number): Command[];
+
+  getCommandsForLayer(layer: number): Command[];
+
   // Returns a histogram array for the specified layer, showing the count of each G-code command.
   // Example: [ "G1: 120", "G0: 30", "M104: 5" ]
   getHistogramArrayFromLayer(layer: number): Array<string>;
+
+  // Returns the extruded volume in mm3 of each command in the layer, in command order.
+  // Example: [0.2, 0.1, 0]
+  getExtrusionPerCommandArrayFromLayer(layer: number): number[];
+
+  // Returns the extruded volume per distance traveled (mm3/mm) of each command in the layer, in command order.
+  // Example: [0.2, 0.1, 0]
+  getExtrusionPerDistanceArrayFromLayer(layer: number): number[];
 
   // === HEIGHT STATS ===
   getAllHeightChangesLayerArray(): number[];

@@ -35,6 +35,7 @@ export interface Command {
   last_seen_f_mm_s?: number;
   last_seen_z?: number; // Last seen Z position
 
+  // Computed values differences for this command to the previous command
   distance?: number; // Distance traveled for this command
   extruded_volume_mm3?: number; // Volume of filament extruded for this command
   weight_g?: number; // Weight of filament used for this command
@@ -651,6 +652,22 @@ export class ParserV2 implements IParser {
       counts.set(cmd.code, (counts.get(cmd.code) ?? 0) + 1);
     }
     return Array.from(counts, ([code, freq]) => `${code}: ${freq}`);
+  }
+
+  // Returns the extruded volume (mm3) of each command in the layer, in command order (0 when none).
+  // Example: [0.2, 0.1, 0]
+  getExtrusionPerCommandArrayFromLayer(layer: number): number[] {
+    return this.getCommandsForLayer(layer).map(
+      (cmd) => cmd.extruded_volume_mm3 ?? 0,
+    );
+  }
+
+  // Returns the extruded volume per distance (mm3/mm) of each command in the layer, in command order (0 when none).
+  // Example: [0.2, 0.1, 0]
+  getExtrusionPerDistanceArrayFromLayer(layer: number): number[] {
+    return this.getCommandsForLayer(layer).map(
+      (cmd) => cmd.volume_per_distance ?? 0,
+    );
   }
 
   // Returns all commands for a given layer that have valid X, Y, and E coordinates, optionally limited to a specified number of commands.

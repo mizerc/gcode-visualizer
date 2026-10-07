@@ -1,14 +1,14 @@
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import Histogram from "../components/core/Histogram";
 import { useApp } from "../context/AppContext";
 import DashContContainer from "@/components/gui/DashContContainer";
 import { LayerAndCommandPicker } from "../components/core/LayerAndCommandPicker";
 import { GridContainer } from "@/components/grid/GridContainer";
 import { GridCard } from "@/components/grid/GridCard";
 import FieldTable, { type FieldRow } from "@/components/gui/FieldTable";
-import { C5_CommandBreakdown } from "./TabPrintOverview/C5_CommandBreakdown";
+import { C5_CommandBreakdown } from "./FileOverviewPage.tsx/C5_CommandBreakdown";
+import { C6_ExtrusionPerCommand } from "./FileOverviewPage.tsx/C6_ExtrusionPerCommand";
+import { C7_ExtrusionPerDistance } from "./FileOverviewPage.tsx/C7_ExtrusionPerDistance";
 
-export function LayerAnalysisPage() {
+export function PerLayerAnalysisPage() {
   const { parsedInstance, layer } = useApp();
 
   const generalRows: FieldRow[] = [
@@ -32,6 +32,8 @@ export function LayerAnalysisPage() {
         </GridCard>
 
         <C5_CommandBreakdown />
+        <C6_ExtrusionPerCommand />
+        <C7_ExtrusionPerDistance />
       </GridContainer>
     </DashContContainer>
   );

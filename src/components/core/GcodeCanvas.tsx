@@ -1,5 +1,5 @@
+import type { Command } from "@/core/ParserV2";
 import React, { useRef, useEffect } from "react";
-import type { Command } from "../../core/ParserV1";
 
 // class Camera {
 //   x: number;
